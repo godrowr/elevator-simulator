@@ -29,13 +29,13 @@ public class Floor_subsystem implements Runnable{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			
 			String l;
-            while ((l = reader.readLine()) != null) {
-                System.out.println(l);
-                String[] splited = l.split("\\s+");
+			while ((l = reader.readLine()) != null) {
+				System.out.println(l);
+				String[] splited = l.split("\\s+");
 				morelines.add(splited);
-            }
+			}
             
-            parseMoreLinesToEvents(morelines);
+			parseMoreLinesToEvents(morelines);
             
 		} catch ( IOException e1) {
 			// TODO Auto-generated catch block URISyntaxException |

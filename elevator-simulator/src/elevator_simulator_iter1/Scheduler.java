@@ -12,9 +12,7 @@ public class Scheduler implements Runnable{
 	}
 	
 	public void inputInfo(List<Button> buttons) {
-		for (Button button : buttons) {
-			
-		}
+
 	}
 
 	@Override
