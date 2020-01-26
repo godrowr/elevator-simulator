@@ -1,16 +1,18 @@
 package elevator_simulator_iter1;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 
-public class Elevator_subsystem {
+public class Elevator_subsystem implements Runnable {
 	private Scheduler scheduler;
 
 	public Elevator_subsystem(Scheduler scheduler) {
 		this.setScheduler(scheduler);
 	}
 	
-	public void getInfoFromScheduler(Button button) {
-		
+	public void getInfoFromScheduler() {
+		Queue buttons = scheduler.getFloorRequest();
 	}
 
 	public Scheduler getScheduler() {
@@ -19,6 +21,12 @@ public class Elevator_subsystem {
 
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

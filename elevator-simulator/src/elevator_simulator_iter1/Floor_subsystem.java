@@ -1,36 +1,62 @@
 package elevator_simulator_iter1;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Time;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Floor_subsystem {
+public class Floor_subsystem implements Runnable{
 	private Scheduler scheduler;
 	
 	public Floor_subsystem(Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
 	
-	public void sendInfoToScheduler(Button button) {
-		scheduler.sendInfoToElevator(button);
+	public void sendInfoToScheduler(List<Button> buttons) {
+		scheduler.inputInfo(buttons);
 	}
 	
-	public void readInEvent(URI inputFile) {
-		try {
-			List<String> lines = Files.readAllLines(Paths.get(inputFile));
-			for(String line : lines) {
-				String[] splited = line.split("\\s+");
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+		try {
+			List<String[]> morelines = new ArrayList<String[]>();
+			InputStream in = Floor_subsystem.class.getResourceAsStream("inputFile.txt");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			
+			String l;
+            while ((l = reader.readLine()) != null) {
+                System.out.println(l);
+                String[] splited = l.split("\\s+");
+				morelines.add(splited);
+            }
+            
+            parseMoreLinesToEvents(morelines);
+            
+		} catch ( IOException e1) {
+			// TODO Auto-generated catch block URISyntaxException |
+			e1.printStackTrace();
+		} 
+
+	}
+	
+	public void parseMoreLinesToEvents(List<String[]> list) {
+		List<Button> buttons = new ArrayList<Button>();
+		FloorButton floor;
+		ElevatorButton destination;
+		for(String[] line : list) {
+			floor = new FloorButton(line[0], Integer.parseInt(line[1]), line[2]);
+			destination = new ElevatorButton(Integer.parseInt(line[1]), Integer.parseInt(line[3]));
+			buttons.add(floor);
+			buttons.add(destination);
+		}
+		
+		sendInfoToScheduler(buttons);
+		
 	}
 
 }
