@@ -19,9 +19,9 @@ doors. **
 | Contributor  | Responsibility |
 | ------------- | ------------- |
 | Ryan F.  | Main Elevator  |
-| Kaelan  | Sequence, Testing |
+| Kaelan  | Sequence, UML |
 | Ryan G.  | Floor, Basic Elevator & Scheduler |
-| Xander | UML, Documentation |
+| Xander | Testing |
 | Andrew | Main Scheduler |
 
 ### Getting started
