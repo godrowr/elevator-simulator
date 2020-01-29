@@ -18,11 +18,11 @@ doors. **
 
 | Contributor  | Responsibility |
 | ------------- | ------------- |
-| Ryan F.  | .  |
-| Kaelan  | . |
-| Ryan G.  | . |
-| Xander | . |
-| Andrew | .  |
+| Ryan F.  | Elevator  |
+| Kaelan  | Sequence |
+| Ryan G.  | Floor |
+| Xander | UML |
+| Andrew | Scheduler |
 
 ### Getting started
 ...
