@@ -19,9 +19,9 @@ doors. **
 | Contributor  | Responsibility |
 | ------------- | ------------- |
 | Ryan F.  | Elevator  |
-| Kaelan  | Sequence, Testing |
+| Kaelan  | Sequence, UML |
 | Ryan G.  | Floor |
-| Xander | UML, Documentation |
+| Xander | Testing, Documentation |
 | Andrew | Scheduler |
 
 ### Getting started
