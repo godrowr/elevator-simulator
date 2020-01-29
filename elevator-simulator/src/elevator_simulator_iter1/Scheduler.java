@@ -12,12 +12,17 @@ public class Scheduler implements Runnable{
 	}
 	
 	public void inputInfo(List<Button> buttons) {
-
+		for(Button b: buttons) {
+			
+		}
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		while(true) {
+			
+		}
 		
 	}
 

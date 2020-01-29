@@ -9,9 +9,14 @@ import java.util.List;
 
 public class Floor_subsystem implements Runnable{
 	private Scheduler scheduler;
+	private List<Floor> floors = new ArrayList<Floor>();
 	
-	public Floor_subsystem(Scheduler scheduler) {
+	public Floor_subsystem(Scheduler scheduler, int floorNo) {
 		this.scheduler = scheduler;
+		for(;floorNo > 0; floorNo--) {
+			floors.add(new Floor(floorNo));
+			//System.out.println("Floor Added");
+		}
 	}
 	
 	public void sendInfoToScheduler(List<Button> buttons) {
@@ -35,7 +40,7 @@ public class Floor_subsystem implements Runnable{
 				morelines.add(splited);
 			}
             
-			parseMoreLinesToEvents(morelines);
+			parseFile(morelines);
             
 		} catch ( IOException e1) {
 			// TODO Auto-generated catch block URISyntaxException |
@@ -44,7 +49,7 @@ public class Floor_subsystem implements Runnable{
 
 	}
 	
-	public void parseMoreLinesToEvents(List<String[]> list) {
+	public void parseFile(List<String[]> list) {
 		List<Button> buttons = new ArrayList<Button>();
 		FloorButton floor;
 		ElevatorButton destination;
@@ -61,12 +66,11 @@ public class Floor_subsystem implements Runnable{
 
 }
 
-class Floor extends Floor_subsystem{
+class Floor {
 	private int floorNo;
 	private ArrayList<FloorButton> buttonList;
 
-	public Floor(Scheduler scheduler, int floorNumber) {
-		super(scheduler);
+	public Floor(int floorNumber) {
 		this.floorNo = floorNumber;
 		// TODO Auto-generated constructor stub
 	}

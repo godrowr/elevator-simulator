@@ -6,9 +6,14 @@ import java.util.Queue;
 
 public class Elevator_subsystem implements Runnable {
 	private Scheduler scheduler;
+	private List<Elevator> elevators = new ArrayList<Elevator>();
 
-	public Elevator_subsystem(Scheduler scheduler) {
+	public Elevator_subsystem(Scheduler scheduler, int ElevatorNo) {
 		this.setScheduler(scheduler);
+		for(;ElevatorNo > 0; ElevatorNo--) {
+			elevators.add(new Elevator(ElevatorNo));
+			//System.out.println("Elevator Added");
+		}
 	}
 	
 	public void getInfoFromScheduler() {
@@ -32,18 +37,26 @@ public class Elevator_subsystem implements Runnable {
 
 }
 
-class Elevator extends Elevator_subsystem{
+class Elevator {
 	private int ElevatorNo;
 	private ArrayList<ElevatorButton> buttonlist;
+	private int currFloor;
 	
-	public Elevator(Scheduler scheduler, int ElevatorNo) {
-		super(scheduler);
+	public Elevator(int ElevatorNo) {
 		this.ElevatorNo = ElevatorNo;
 		// TODO Auto-generated constructor stub
 	}
 
 	public int getElevatorNo() {
 		return ElevatorNo;
+	}
+
+	public int getCurrFloor() {
+		return currFloor;
+	}
+
+	public void setCurrFloor(int currFloor) {
+		this.currFloor = currFloor;
 	}
 
 	
