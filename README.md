@@ -18,11 +18,11 @@ doors. **
 
 | Contributor  | Responsibility |
 | ------------- | ------------- |
-| Ryan F.  | Elevator  |
+| Ryan F.  | Main Elevator  |
 | Kaelan  | Sequence, Testing |
 | Ryan G.  | Floor, Basic Elevator & Scheduler |
 | Xander | UML, Documentation |
-| Andrew | Scheduler |
+| Andrew | Main Scheduler |
 
 ### Getting started
 ...
