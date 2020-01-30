@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * 
+ * @author Ryan Gaudreault
+ *
+ */
 public class Elevator_subsystem implements Runnable {
 	private Scheduler scheduler;
 	private List<Elevator> elevators = new ArrayList<Elevator>();
@@ -37,6 +42,11 @@ public class Elevator_subsystem implements Runnable {
 
 }
 
+/**
+ * 
+ * @author Ryan Gaudreault
+ *
+ */
 class Elevator {
 	private int ElevatorNo;
 	private ArrayList<ElevatorButton> buttonlist;
@@ -61,6 +71,7 @@ class Elevator {
 
 	
 }
+
 
 class Motor {
 	

@@ -3,9 +3,14 @@ package elevator_simulator_iter1;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * 
+ * @author Ryan Gaudreault
+ *
+ */
 public class Scheduler implements Runnable{
-	private Queue elevatorRequest; //These are the buttons pushed in the elevator.
-	private Queue floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
+	private Queue<ElevatorButton> elevatorRequest; //These are the buttons pushed in the elevator.
+	private Queue<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
 	
 	public Scheduler() {
 		
@@ -23,7 +28,6 @@ public class Scheduler implements Runnable{
 		while(true) {
 			
 		}
-		
 	}
 
 

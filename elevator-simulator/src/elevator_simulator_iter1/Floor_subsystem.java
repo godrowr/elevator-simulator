@@ -6,16 +6,25 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 
+ * @author Ryan Gaudreault 100968218
+ */
 public class Floor_subsystem implements Runnable{
 	private Scheduler scheduler;
 	private List<Floor> floors = new ArrayList<Floor>();
 	
 	public Floor_subsystem(Scheduler scheduler, int floorNo) {
 		this.scheduler = scheduler;
-		for(;floorNo > 0; floorNo--) {
-			floors.add(new Floor(floorNo));
-			//System.out.println("Floor Added");
+		for(int i = floorNo;i > 0; i--) {
+			if (i == floorNo) { //Penthouse floor
+				floors.add(new Floor(floorNo, 0));
+			} else if (i == 1) { //Ground floor
+				floors.add(new Floor(floorNo, 1));
+			} else { //Any other floor
+				floors.add(new Floor(floorNo, 2));
+			}
+						//System.out.println("Floor Added");
 		}
 	}
 	
@@ -35,7 +44,7 @@ public class Floor_subsystem implements Runnable{
 			
 			String l;
 			while ((l = reader.readLine()) != null) {
-				System.out.println(l);
+				//System.out.println(l);
 				String[] splited = l.split("\\s+");
 				morelines.add(splited);
 			}
@@ -49,6 +58,9 @@ public class Floor_subsystem implements Runnable{
 
 	}
 	
+	/*
+	 * 
+	 */
 	public void parseFile(List<String[]> list) {
 		List<Button> buttons = new ArrayList<Button>();
 		FloorButton floor;
@@ -63,18 +75,39 @@ public class Floor_subsystem implements Runnable{
 		sendInfoToScheduler(buttons);
 		
 	}
+	
 
 }
 
+/**
+ * 
+ * @author RG
+ *
+ */
 class Floor {
 	private int floorNo;
-	private ArrayList<FloorButton> buttonList;
+	private List<FloorButton> buttonList = new ArrayList<FloorButton>();
+	private List<FloorLamp> lampList = new ArrayList<FloorLamp>();
 
-	public Floor(int floorNumber) {
+	public Floor(int floorNumber, int type) {
 		this.floorNo = floorNumber;
-		// TODO Auto-generated constructor stub
+		if (type == 0) {
+			buttonList.add(new FloorButton(null,floorNo,"Down"));
+		} else if (type == 1) {
+			buttonList.add(new FloorButton(null,floorNo,"Up"));
+		} else {
+			buttonList.add(new FloorButton(null,floorNo,"Up"));
+			buttonList.add(new FloorButton(null,floorNo,"Down"));
+		}
+		initializeLamps(floorNo);
 	}
 
+	public void initializeLamps(int floorNo) {
+		if (buttonList.size() == 1) {
+			lampList.add(new FloorLamp(floorNo));
+		}
+	}
+	
 	public int getFloorNo() {
 		return floorNo;
 	}

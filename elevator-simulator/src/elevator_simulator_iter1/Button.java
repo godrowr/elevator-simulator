@@ -1,9 +1,17 @@
 package elevator_simulator_iter1;
 
+/**
+ * 
+ * @author Ryan Gaudreault
+ *
+ */
 public class Button {
+	private boolean push; 
 	
 	public void pushButton() {
-		
+		push = true;
+		//do something;
+		push = false;
 	}
 	
 	public void turnOnLamp() {
@@ -12,6 +20,11 @@ public class Button {
 
 }
 
+/**
+ * This class exteneds Button but is responsible for interfacing with user requests for an elevator on a paticular floor. 
+ * @author Ryan Gaudreault
+ *
+ */
 class FloorButton extends Button {
 	private String time;
 	private int floor;
@@ -57,6 +70,7 @@ class FloorButton extends Button {
 	}
 	
 }
+
 
 class ElevatorButton extends Button {
 	private ElevatorLamp lamp;
