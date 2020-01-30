@@ -2,7 +2,7 @@ package elevator_simulator_iter1;
 
 /**
  * 
- * @author RG
+ * @author Ryan Gaudreault
  *
  */
 public class Button {
@@ -22,7 +22,7 @@ public class Button {
 
 /**
  * 
- * @author RG
+ * @author Ryan Gaudreault
  *
  */
 class FloorButton extends Button {

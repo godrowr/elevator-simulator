@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 /**
  * This main class creates the three subsystem threads along with thier respective objects and starts them. 
- * @author RG
+ * @author Ryan Gaudreault
  *
  */
 public class Main {
@@ -21,7 +21,6 @@ public class Main {
 		System.out.println("Number of Floors in the building?");
 		int floorNo = Integer.parseInt(input.nextLine());
 		*/
-		
 		schedule = new Scheduler();
 		elevatorsys = new Elevator_subsystem(schedule, 1);
 		floorsys = new Floor_subsystem(schedule, 5);

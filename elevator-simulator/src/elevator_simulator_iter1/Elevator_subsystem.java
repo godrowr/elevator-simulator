@@ -6,7 +6,7 @@ import java.util.Queue;
 
 /**
  * 
- * @author RG
+ * @author Ryan Gaudreault
  *
  */
 public class Elevator_subsystem implements Runnable {
@@ -44,7 +44,7 @@ public class Elevator_subsystem implements Runnable {
 
 /**
  * 
- * @author RG
+ * @author Ryan Gaudreault
  *
  */
 class Elevator {

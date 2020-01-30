@@ -5,7 +5,7 @@ import java.util.Queue;
 
 /**
  * 
- * @author RG
+ * @author Ryan Gaudreault
  *
  */
 public class Scheduler implements Runnable{

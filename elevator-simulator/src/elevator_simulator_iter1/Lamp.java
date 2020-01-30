@@ -6,7 +6,7 @@ public class Lamp {
 
 /**
  * 
- * @author RG
+ * @author Ryan Gaudreault
  *
  */
 class FloorLamp extends Lamp {
