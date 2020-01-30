@@ -21,7 +21,7 @@ public class Button {
 }
 
 /**
- * 
+ * This class exteneds Button but is responsible for interfacing with user requests for an elevator on a paticular floor. 
  * @author Ryan Gaudreault
  *
  */
