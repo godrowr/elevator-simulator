@@ -1,6 +1,11 @@
 package elevator_simulator_iter1;
 import java.util.Scanner;
 
+/**
+ * This main class creates the three subsystem threads along with thier respective objects and starts them. 
+ * @author RG
+ *
+ */
 public class Main {
 	
 	public static void main(String[] args) {
