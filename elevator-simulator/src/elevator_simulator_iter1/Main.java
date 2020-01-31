@@ -27,9 +27,14 @@ public class Main {
 		schedulerSystem = new Thread (schedule,"Scheduler");
 		elevatorSystem = new Thread (elevatorsys, "Elevator System");
 		floorSystem = new Thread (floorsys, "Floor System");
+		/*
 		schedulerSystem.start();
 		elevatorSystem.start();
 		floorSystem.start();
-		
+		schedulerSystem.interrupt();
+		elevatorSystem.interrupt();
+		floorSystem.interrupt();
+		*/
+		System.out.println("Hello");
 	}
 }

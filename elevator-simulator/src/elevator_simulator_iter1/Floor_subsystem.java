@@ -29,7 +29,7 @@ public class Floor_subsystem implements Runnable{
 	}
 	
 	public void sendInfoToScheduler(List<Button> buttons) {
-		scheduler.inputInfo(buttons);
+		scheduler.inputButtonInfo(buttons);
 	}
 	
 

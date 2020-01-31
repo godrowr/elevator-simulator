@@ -51,6 +51,7 @@ class Elevator {
 	private int ElevatorNo;
 	private ArrayList<ElevatorButton> buttonlist;
 	private int currFloor;
+	private int elevatorDirection;
 	
 	public Elevator(int ElevatorNo) {
 		this.ElevatorNo = ElevatorNo;
@@ -68,7 +69,14 @@ class Elevator {
 	public void setCurrFloor(int currFloor) {
 		this.currFloor = currFloor;
 	}
-
+	
+	public void moveUp() {
+		currFloor++;
+	}
+	public void moveDown() {
+		currFloor--;
+	}
+	
 	
 }
 
