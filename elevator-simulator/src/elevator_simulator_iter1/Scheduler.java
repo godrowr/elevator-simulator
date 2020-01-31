@@ -1,5 +1,6 @@
 package elevator_simulator_iter1;
 
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
@@ -11,9 +12,12 @@ import java.util.Queue;
 public class Scheduler implements Runnable{
 	private Queue<ElevatorButton> elevatorRequest; //These are the buttons pushed in the elevator.
 	private Queue<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
-	private boolean elevatorWriteable = false;
+	private boolean elevatorWriteable = true;
 	public Scheduler() {
-		
+
+		elevatorRequest = new ArrayDeque<ElevatorButton>() ; //These are the buttons pushed in the elevator.
+		floorRequest = new ArrayDeque<FloorButton>(); //These are the buttons pushed on the floors by waiting patrons. 
+		elevatorWriteable = true;
 	}
 	/*
 	 * @param List of Button Objects
@@ -30,7 +34,7 @@ public class Scheduler implements Runnable{
 				System.err.println(e);
 			}
 		}
-		
+		System.out.println(buttons);
 		elevatorWriteable = false;
 		
 		FloorButton fButton = (FloorButton) buttons.get(0);
@@ -40,6 +44,7 @@ public class Scheduler implements Runnable{
 		elevatorRequest.add(eButton);
 		
 		elevatorWriteable = true;
+		buttons.clear();
 		notifyAll();
 	}
 	

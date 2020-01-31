@@ -3,7 +3,6 @@ package elevator_simulator_iter1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.time;
 import java.time.Clock;
 import java.time.Instant;
 
@@ -14,7 +13,7 @@ import java.time.Instant;
  */
 public class Elevator_subsystem implements Runnable {
 	private Scheduler scheduler;
-	private List<Elevator> elevators = new ArrayList<Elevator>();
+	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
 
 	public Elevator_subsystem(Scheduler scheduler, int ElevatorNo) {
 		this.setScheduler(scheduler);
@@ -25,7 +24,14 @@ public class Elevator_subsystem implements Runnable {
 	}
 	
 	public void getInfoFromScheduler() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Queue buttons = scheduler.getFloorRequest();
+		this.elevators.get(0).setButtonlist(buttons);
 	}
 
 	public Scheduler getScheduler() {
@@ -39,7 +45,9 @@ public class Elevator_subsystem implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+		while(true) {
+			getInfoFromScheduler();
+		}
 	}
 
 
@@ -52,7 +60,7 @@ public class Elevator_subsystem implements Runnable {
  */
 class Elevator {
 	private int ElevatorNo;
-	private ArrayList<ElevatorButton> buttonlist;
+	private Queue<ElevatorButton> buttonlist;
 	private int currFloor;
 	private int elevatorDirection;
 	private Motor motor;
@@ -69,6 +77,12 @@ class Elevator {
 		return ElevatorNo;
 	}
 
+	public void setButtonlist(Queue buttons) {
+		this.buttonlist = buttons;
+		System.out.println("Updated buttonlist");
+		System.out.println(this.buttonlist);
+	}
+	
 	public int getCurrFloor() {
 		return currFloor;
 	}
