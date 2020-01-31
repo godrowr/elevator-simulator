@@ -55,9 +55,13 @@ class Elevator {
 	private ArrayList<ElevatorButton> buttonlist;
 	private int currFloor;
 	private int elevatorDirection;
+	private Motor motor;
+	private Door door;
 	
 	public Elevator(int ElevatorNo) {
 		this.ElevatorNo = ElevatorNo;
+		this.motor = new Motor();
+		this.door = new Door();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -92,7 +96,7 @@ class Motor {
 	 */
 	double vel;
 	int dir;
-	double ACCEL = 3.2; // Shaft accel m/s^2
+	double ACCEL = 3.2/1000; // Shaft accel m/s^2
 	double time;
 	long timer;
 	
