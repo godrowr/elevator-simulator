@@ -3,6 +3,9 @@ package elevator_simulator_iter1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.time;
+import java.time.Clock;
+import java.time.Instant;
 
 /**
  * 
@@ -72,6 +75,7 @@ class Elevator {
 	
 	public void moveUp() {
 		currFloor++;
+		
 	}
 	public void moveDown() {
 		currFloor--;
@@ -82,6 +86,44 @@ class Elevator {
 
 
 class Motor {
+	/**
+	 * Vel is velocity of the elevator in the shaft, should always be > 0
+	 * Dir is travel directon. 1 is up, 0  is stationary, -1 is down.
+	 */
+	double vel;
+	int dir;
+	double ACCEL = 3.2; // Shaft accel m/s^2
+	double time;
+	long timer;
+	
+	public Motor() {
+		this.vel = 0;
+		this.dir = 0;
+		this.time = 0;
+		this.timer = Instant.now().toEpochMilli();
+	}
+	
+	public void start(int dir) {
+		this.dir = dir;
+		this.timer = Instant.now().toEpochMilli();
+	}
+	
+	public double get_dist() {
+		long elapsed = (Instant.now().toEpochMilli() - timer);
+		double traveled = this.vel * elapsed * this.dir;
+		this.vel = this.vel + (this.ACCEL * elapsed);
+		this.timer = Instant.now().toEpochMilli();
+		
+		return traveled;
+	}
+	
+	public double stop() {
+		double traveled = this.get_dist();
+		this.dir = 0;
+		this.vel = 0;
+		
+		return traveled;
+	}
 	
 }
 
