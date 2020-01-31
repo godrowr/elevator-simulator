@@ -128,5 +128,17 @@ class Motor {
 }
 
 class Door {
+	private boolean open;
+	Door(){
+		this.open = false;
+	}
+	
+	public void toggle() {
+		this.open = ! this.open;
+	}
+	
+	public boolean is_open() {
+		return this.open;
+	}
 	
 }
