@@ -30,7 +30,7 @@ public class Elevator_subsystem implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Queue buttons = scheduler.getFloorRequest();
+		Queue buttons = scheduler.getElevatorRequest();
 		this.elevators.get(0).setButtonlist(buttons);
 	}
 
@@ -76,11 +76,24 @@ class Elevator {
 	public int getElevatorNo() {
 		return ElevatorNo;
 	}
-
-	public void setButtonlist(Queue buttons) {
+	
+	/*
+	 * @param queue of all floors Elevator must stop at
+	 * Elevator is not functional and cannot serve request, therefore stall
+	 */
+	public void setButtonlist(Queue<ElevatorButton> buttons) {
 		this.buttonlist = buttons;
-		System.out.println("Updated buttonlist");
-		System.out.println(this.buttonlist);
+		if(!buttonlist.isEmpty()) {
+			
+			for(ElevatorButton eButton : buttonlist) {
+				System.out.println("Elevator is at " + eButton.getCurfloor());
+				System.out.println("Elevator requested at " + eButton.getFloorNo());
+			}
+		}
+		
+		
+		//System.out.println("Updated buttonlist");
+		//System.out.println(this.buttonlist);
 	}
 	
 	public int getCurrFloor() {

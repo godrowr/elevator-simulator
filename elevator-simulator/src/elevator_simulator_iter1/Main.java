@@ -38,10 +38,9 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		schedulerSystem.interrupt();
-		elevatorSystem.interrupt();
-		floorSystem.interrupt();
+		//schedulerSystem.interrupt();
+		//elevatorSystem.interrupt();
+		//floorSystem.interrupt();
 		
-		System.out.println("Hello");
 	}
 }

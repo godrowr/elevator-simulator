@@ -34,7 +34,7 @@ public class Scheduler implements Runnable{
 				System.err.println(e);
 			}
 		}
-		System.out.println(buttons);
+		//System.out.println(buttons);
 		elevatorWriteable = false;
 		
 		FloorButton fButton = (FloorButton) buttons.get(0);
@@ -92,11 +92,11 @@ public class Scheduler implements Runnable{
 	}
 
 
-	public Queue getElevatorRequest() {
+	public Queue<ElevatorButton> getElevatorRequest() {
 		return elevatorRequest;
 	}
 
-	public void setElevatorRequest(Queue elevatorRequest) {
+	public void setElevatorRequest(Queue<ElevatorButton> elevatorRequest) {
 		this.elevatorRequest = elevatorRequest;
 	}
 
