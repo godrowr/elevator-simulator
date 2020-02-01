@@ -51,6 +51,7 @@ public class Scheduler implements Runnable{
 	/*
 	 * Receive info from Arrival Sensor
 	 * Determine elevator direction, clear Lamp/Button
+	 * TO BE IMPLEMENTED IN ITERATION 2
 	 * @param ArrivalSensor
 	 */
 	private void inputArrivalInfo(ArrivalSensor floorArrived) {
@@ -76,7 +77,7 @@ public class Scheduler implements Runnable{
 	}
 	
 	/*
-	 * Scheduler recieves info from elevator (direction, current floor)
+	 * Scheduler receives info from elevator (direction, current floor)
 	 * @returns appropriate floorButton for elevator to service
 	 */
 	private void getFloorButton(Elevator elevator) {
@@ -100,7 +101,7 @@ public class Scheduler implements Runnable{
 		this.elevatorRequest = elevatorRequest;
 	}
 
-	public Queue getFloorRequest() {
+	public Queue<FloorButton> getFloorRequest() {
 		return floorRequest;
 	}
 
