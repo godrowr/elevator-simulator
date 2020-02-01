@@ -1,5 +1,6 @@
 package elevator_simulator_iter1;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This main class creates the three subsystem threads along with thier respective objects and starts them. 
@@ -27,9 +28,19 @@ public class Main {
 		schedulerSystem = new Thread (schedule,"Scheduler");
 		elevatorSystem = new Thread (elevatorsys, "Elevator System");
 		floorSystem = new Thread (floorsys, "Floor System");
+		
 		schedulerSystem.start();
 		elevatorSystem.start();
 		floorSystem.start();
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//schedulerSystem.interrupt();
+		//elevatorSystem.interrupt();
+		//floorSystem.interrupt();
 		
 	}
 }
