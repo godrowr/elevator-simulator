@@ -22,25 +22,28 @@ SYSC 3303 Elevator control system and simulator team project.
 1. Unzip file into folder
 
 ### Files
-#### Floor_subsystem
+#### 1. Floor_subsystem
 This file is the floor subsystem of the elevator simulation. 
-#### FloorTest
+#### 2. FloorTest
 Ths file tests the floor methods. 
-#### Elevator_subsystem
+#### 3. Elevator_subsystem
 This file is the elevator subsystem of the elevator simulation. 
-#### Scheduler
+#### 4. Scheduler
 This file is the scheduler subsystem of the elevator simulation. 
-#### SchedulerTest
+#### 5. SchedulerTest
 This file tests schedule's methods. 
-#### Button
+#### 6. Button
 This file includes the button classes for the elevator and the floor. 
-#### ArrivalSensor
+#### 7. ArrivalSensor
 This files (not complete) includes the arrival sensor class. 
-#### Lamp
+#### 8. Lamp
 This file includes the lamp classes of the floor and elevator.
-#### Main
+#### 9. Main
 This file when run starts the Elevator_subsystem, Floor_subsystem and Scheduler threads and showcases the information that is sent between the two. 
-#### inputFile
+#### 10. inputFile
 This file consists of the format which is indicated in the project requirements. It includes the date, floor number, direction and destination of each request. 
-
+#### 11. Sequence_Diagram
+Includes a sample sequence diagram that illustates an abstract model of our submission. 
+#### 12. UML_Diagram
+Includes the currentUML diagram of all the classes within our submission. 
 
