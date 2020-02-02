@@ -20,7 +20,7 @@ doors. **
 | ------------- | ------------- |
 | Ryan F.  | Main Elevator  |
 | Kaelan  | Sequence, UML |
-| Ryan G.  | Floor, Basic Elevator & Scheduler, Sequence |
+| Ryan G.  | Main Floor, Basic Elevator & Scheduler |
 | Xander | Testing |
 | Andrew | Main Scheduler |
 
