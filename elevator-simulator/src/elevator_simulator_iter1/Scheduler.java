@@ -13,8 +13,8 @@ public class Scheduler implements Runnable{
 	private Queue<ElevatorButton> elevatorRequest; //These are the buttons pushed in the elevator.
 	private Queue<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
 	private boolean elevatorWriteable = true;
+	
 	public Scheduler() {
-
 		elevatorRequest = new ArrayDeque<ElevatorButton>() ; //These are the buttons pushed in the elevator.
 		floorRequest = new ArrayDeque<FloorButton>(); //These are the buttons pushed on the floors by waiting patrons. 
 		elevatorWriteable = true;
@@ -80,7 +80,7 @@ public class Scheduler implements Runnable{
 	 * @returns appropriate floorButton for elevator to service
 	 */
 	private void getFloorButton(Elevator elevator) {
-		
+		//TODO In next iteration
 	}
 
 	@Override

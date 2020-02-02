@@ -7,7 +7,7 @@ import java.time.Clock;
 import java.time.Instant;
 
 /**
- * 
+ * @author Ryan Frohar
  * @author Ryan Gaudreault
  *
  */
@@ -54,7 +54,7 @@ public class Elevator_subsystem implements Runnable {
 }
 
 /**
- * 
+ * @author Ryan Frohar
  * @author Ryan Gaudreault
  *
  */
@@ -83,11 +83,11 @@ class Elevator {
 	 */
 	public void setButtonlist(Queue<ElevatorButton> buttons) {
 		this.buttonlist = buttons;
+		
 		if(!buttonlist.isEmpty()) {
 			
 			for(ElevatorButton eButton : buttonlist) {
-				System.out.println("Elevator is at " + eButton.getCurfloor());
-				System.out.println("Elevator requested at " + eButton.getFloorNo());
+				System.out.println("Elevator is at " + eButton.getCurfloor() + " and requested at " + eButton.getFloorNo());
 			}
 		}
 		
@@ -115,7 +115,11 @@ class Elevator {
 	
 }
 
-
+/**
+ * 
+ * @author Ryan Frohar
+ *
+ */
 class Motor {
 	/**
 	 * Vel is velocity of the elevator in the shaft, should always be > 0
@@ -158,6 +162,10 @@ class Motor {
 	
 }
 
+/**
+ * @author Ryan Frohar
+ *
+ */
 class Door {
 	private boolean open;
 	Door(){

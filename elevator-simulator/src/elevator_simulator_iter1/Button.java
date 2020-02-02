@@ -71,7 +71,11 @@ class FloorButton extends Button {
 	
 }
 
-
+/**
+ * 
+ * @author Ryan Frohar
+ *
+ */
 class ElevatorButton extends Button {
 	private ElevatorLamp lamp;
 	private int floorNo;

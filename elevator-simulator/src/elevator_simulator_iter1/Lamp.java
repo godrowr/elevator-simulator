@@ -12,9 +12,11 @@ public class Lamp {
 class FloorLamp extends Lamp {
 	private int floorNo;
 	private boolean on;
+	private String direction;
 	
-	public FloorLamp(int floorNo) {
+	public FloorLamp(int floorNo, String direction) {
 		this.floorNo = floorNo;
+		this.direction = direction;
 		on = false; 
 	}
 }

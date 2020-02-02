@@ -1,9 +1,9 @@
 package elevator_simulator_iter1;
-import java.util.Scanner;
+
 import java.util.concurrent.TimeUnit;
 
 /**
- * This main class creates the three subsystem threads along with thier respective objects and starts them. 
+ * This main class creates the three subsystem threads along with their respective objects and starts them. 
  * @author Ryan Gaudreault
  *
  */
@@ -14,17 +14,12 @@ public class Main {
 		Scheduler schedule;
 		Elevator_subsystem elevatorsys;
 		Floor_subsystem floorsys;
-		/*
-		Scanner input = new Scanner(System.in);
-		System.out.println("Number of Elevators in the building?");
-		int elevatorNo = Integer.parseInt(input.nextLine());
-		
-		System.out.println("Number of Floors in the building?");
-		int floorNo = Integer.parseInt(input.nextLine());
-		*/
+		int floors = 5;
+		int elevators = 1;
+
 		schedule = new Scheduler();
-		elevatorsys = new Elevator_subsystem(schedule, 1);
-		floorsys = new Floor_subsystem(schedule, 5);
+		elevatorsys = new Elevator_subsystem(schedule, elevators);
+		floorsys = new Floor_subsystem(schedule, floors);
 		schedulerSystem = new Thread (schedule,"Scheduler");
 		elevatorSystem = new Thread (elevatorsys, "Elevator System");
 		floorSystem = new Thread (floorsys, "Floor System");
