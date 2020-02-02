@@ -78,41 +78,6 @@ public class Floor_subsystem implements Runnable{
 		
 	}
 	
-	/*
-	 * Function is used for unit testing purposes only
-	 */
-	public List<Button> inputFile() {
-		
-		List<Button> safeReturn = new ArrayList<Button>();
-		
-		try {
-			List<String[]> morelines = new ArrayList<String[]>();
-			InputStream in = Floor_subsystem.class.getResourceAsStream("inputFile.txt");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			
-			String l;
-			while ((l = reader.readLine()) != null) {
-				//System.out.println(l);
-				String[] splited = l.split("\\s+");
-				morelines.add(splited);
-			}
-            
-			List<Button> buttons = new ArrayList<Button>();
-			FloorButton floor;
-			ElevatorButton destination;
-			for(String[] line : morelines) {
-				floor = new FloorButton(line[0], Integer.parseInt(line[1]), line[2]);
-				destination = new ElevatorButton(Integer.parseInt(line[1]), Integer.parseInt(line[3]));
-				buttons.add(floor);
-				buttons.add(destination);
-				//System.out.println("Here");
-			}
-			return buttons;
-		} catch ( IOException e1) {
-			e1.printStackTrace();
-			return safeReturn;
-		} 
-	}
 }
 
 /**
