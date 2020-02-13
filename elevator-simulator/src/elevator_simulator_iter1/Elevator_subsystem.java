@@ -53,8 +53,7 @@ class Elevator {
 	private ArrayList<ElevatorButton> buttonlist;
 	private int currFloor;
 	private int elevatorDirection;
-	private Boolean movingUp; //Track if the elevator is going up, FOR I2
-	private Boolean movingDown; // Track if the elevator is going down, FOR I2
+	
 	
 	
 
@@ -88,7 +87,21 @@ class Elevator {
 
 
 class Motor {
+	private Boolean movingUp; //Track if the elevator is going up, FOR I2
+	private Boolean movingDown; // Track if the elevator is going down, FOR I2
 	private Boolean stopped; // Track if the elevator is stopped, FOR I2
+	
+	public Boolean getMovingUp() {// FOR I2
+		return this.movingUp;
+	}
+	
+	public Boolean getMovingDown() {// FOR I2
+		return this.movingDown;
+	}
+	
+	public Boolean getStopped() {// FOR I2
+		return this.stopped;
+	}
 	
 }
 
@@ -97,4 +110,10 @@ class Door {
 	private Boolean doorOpen;// Track if the door is currently open, FOR I2
 	private Boolean doorClosed;// Track if the door is closed, FOR I2
 	
+	public Boolean getDoorOpen() { // FOR I2
+		return this.doorOpen;
+	}
+	public Boolean getDoorClosed() { // FOR I2
+		return this.doorClosed;
+	}
 }
