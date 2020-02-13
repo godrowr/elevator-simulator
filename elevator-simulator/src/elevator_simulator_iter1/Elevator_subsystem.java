@@ -1,4 +1,4 @@
-package elevator_simulator_iter1;
+//package elevator_simulator_iter1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,8 @@ import java.util.Queue;
 public class Elevator_subsystem implements Runnable {
 	private Scheduler scheduler;
 	private List<Elevator> elevators = new ArrayList<Elevator>();
-
+	
+	
 	public Elevator_subsystem(Scheduler scheduler, int ElevatorNo) {
 		this.setScheduler(scheduler);
 		for(;ElevatorNo > 0; ElevatorNo--) {
@@ -52,6 +53,11 @@ class Elevator {
 	private ArrayList<ElevatorButton> buttonlist;
 	private int currFloor;
 	private int elevatorDirection;
+	private Boolean movingUp; //Track if the elevator is going up, FOR I2
+	private Boolean movingDown; // Track if the elevator is going down, FOR I2
+	
+	
+
 	
 	public Elevator(int ElevatorNo) {
 		this.ElevatorNo = ElevatorNo;
@@ -71,7 +77,7 @@ class Elevator {
 	}
 	
 	public void moveUp() {
-		currFloor++;
+		currFloor++;;
 	}
 	public void moveDown() {
 		currFloor--;
@@ -82,9 +88,13 @@ class Elevator {
 
 
 class Motor {
+	private Boolean stopped; // Track if the elevator is stopped, FOR I2
 	
 }
 
 class Door {
+	
+	private Boolean doorOpen;// Track if the door is currently open, FOR I2
+	private Boolean doorClosed;// Track if the door is closed, FOR I2
 	
 }
