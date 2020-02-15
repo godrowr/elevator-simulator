@@ -25,11 +25,9 @@ public class Main {
 		schedule = new Scheduler();
 		elevatorsys = new Elevator_subsystem(schedule, 1);
 		floorsys = new Floor_subsystem(schedule, 5);
-		schedulerSystem = new Thread (schedule,"Scheduler");
 		elevatorSystem = new Thread (elevatorsys, "Elevator System");
 		floorSystem = new Thread (floorsys, "Floor System");
 		
-		schedulerSystem.start();
 		elevatorSystem.start();
 		floorSystem.start();
 		try {

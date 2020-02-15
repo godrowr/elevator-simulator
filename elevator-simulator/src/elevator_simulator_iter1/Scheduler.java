@@ -9,7 +9,7 @@ import java.util.Queue;
  * @author Ryan Gaudreault
  * @author Andrew Cowan
  */
-public class Scheduler implements Runnable{
+public class Scheduler{
 	private Queue<ElevatorButton> elevatorRequest; //These are the buttons pushed in the elevator.
 	private Queue<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
 	private boolean elevatorWriteable = true;
@@ -83,15 +83,6 @@ public class Scheduler implements Runnable{
 	private void getFloorButton(Elevator elevator) {
 		
 	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		while(true) {
-			//serviceRequest();
-		}
-	}
-
 
 	public Queue<ElevatorButton> getElevatorRequest() {
 		return elevatorRequest;
