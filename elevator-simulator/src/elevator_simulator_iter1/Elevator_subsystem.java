@@ -95,8 +95,16 @@ class Elevator {
 		if(!elevatorButtonList.isEmpty() && !floorButtonList.isEmpty()) {
 			if(this.motor.getDir() == 0) {
 				//if idle, decide what button
+				while(this.currFloor > 0) {
+					this.currFloor--;
+					motor.goDown();
+				}
 			}else if(this.motor.getDir()==1) {
 				//if going up, decide what button
+				int lowestFloor
+				for(FloorButton i: floorButtonList) {
+					
+				}
 			}else if(this.motor.getDir()==-1) {
 				//if going down, decide what button
 			}
@@ -152,14 +160,17 @@ class Motor {
 	
 	public void goUp() {
 		this.dir = 1;
+		System.out.println("Elevator went up one floor");
 	}
 	
 	public void goDown() {
 		this.dir=-1;
+		System.out.println("Elevator went down one floor");
 	}
 	
-	public void stop() {
+	public void stopGoing() {
 		this.dir=0;
+		System.out.println("Elevator stopped");
 	}
 	
 	public int getDir() {
