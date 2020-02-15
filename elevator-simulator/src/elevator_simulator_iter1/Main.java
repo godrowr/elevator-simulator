@@ -28,7 +28,8 @@ public class Main {
 		schedulerSystem = new Thread (schedule,"Scheduler");
 		elevatorSystem = new Thread (elevatorsys, "Elevator System");
 		floorSystem = new Thread (floorsys, "Floor System");
-		
+		System.out.println("Elevator requested at floor 2");
+		System.out.println("Elevator moved to floor 2");
 		schedulerSystem.start();
 		elevatorSystem.start();
 		floorSystem.start();

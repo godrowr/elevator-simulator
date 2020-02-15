@@ -62,11 +62,13 @@ public class Elevator_subsystem implements Runnable {
  */
 class Elevator {
 	private int ElevatorNo;
+	private int maximumFloor;
 	private Queue<ElevatorButton> elevatorButtonList;
 	private Queue<FloorButton> floorButtonList;
 	private int currFloor;
 	private Motor motor;
 	private Door door;
+	private ArrayList<Integer> workList;
 	
 	public Elevator(int ElevatorNo) {
 		this.ElevatorNo = ElevatorNo;
@@ -106,11 +108,12 @@ class Elevator {
 						if(i.getFloor()>currFloor && i.getFloor()<lowestFloor) {
 							lowestFloor = i.getFloor();
 						}
+						
 					}
 					
 			}else if(this.motor.getDir()==-1) {
 				//if going down, decide what button
-				int highestfloor=10;
+				int highestFloor=10;
 				for(FloorButton i: this.floorButtonList) {
 					if(i.getFloor()<currFloor && i.getFloor() > highestFloor) {
 						highestFloor = i.getFloor();
