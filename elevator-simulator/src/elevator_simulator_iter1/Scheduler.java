@@ -76,6 +76,23 @@ public class Scheduler{
 		notifyAll();
 	}
 	
+	public int requestWork(int currFloor, int elevatorDir) {
+		int lowestFloor = 10;
+		int highestFloor=0;
+		for(FloorButton i : this.floorRequest) {
+			if(elevatorDir == 1) {
+				if(i.getFloor()>currFloor && i.getFloor()<lowestFloor) {
+					lowestFloor = i.getFloor();
+				}
+			}else if(elevatorDir == -1) {
+				if(i.getFloor()<currFloor && i.getFloor() > highestFloor) {
+					highestFloor = i.getFloor();
+				}
+			}
+		}
+		
+	}
+	
 	/*
 	 * Scheduler receives info from elevator (direction, current floor)
 	 * @returns appropriate floorButton for elevator to service
