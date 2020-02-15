@@ -91,15 +91,15 @@ class Motor {
 	private Boolean movingDown; // Track if the elevator is going down, FOR I2
 	private Boolean stopped; // Track if the elevator is stopped, FOR I2
 	
-	public Boolean getMovingUp() {// FOR I2
+	public Boolean isMovingUp() {// FOR I2
 		return this.movingUp;
 	}
 	
-	public Boolean getMovingDown() {// FOR I2
+	public Boolean isMovingDown() {// FOR I2
 		return this.movingDown;
 	}
 	
-	public Boolean getStopped() {// FOR I2
+	public Boolean isStopped() {// FOR I2
 		return this.stopped;
 	}
 	
