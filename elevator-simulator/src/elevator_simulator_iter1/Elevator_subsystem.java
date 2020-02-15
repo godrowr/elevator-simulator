@@ -101,18 +101,21 @@ class Elevator {
 				}
 			}else if(this.motor.getDir()==1) {
 				//if going up, decide what button
-				int lowestFloor
-				for(FloorButton i: floorButtonList) {
+				int lowestFloor = 10;
+				for(FloorButton i : this.floorButtonList) {
+						if(i.getFloor()>currFloor && i.getFloor()<lowestFloor) {
+							lowestFloor = i.getFloor();
+						}
+					}
 					
-				}
 			}else if(this.motor.getDir()==-1) {
 				//if going down, decide what button
-			}
-			for(ElevatorButton eButton : buttonlist) {
-				System.out.println("Elevator is at " + eButton.getCurfloor());
-				System.out.println("Elevator requested at " + eButton.getFloorNo());
-				
-				
+				int highestfloor=10;
+				for(FloorButton i: this.floorButtonList) {
+					if(i.getFloor()<currFloor && i.getFloor() > highestFloor) {
+						highestFloor = i.getFloor();
+					}
+				}
 			}
 	}
 	public int getCurrFloor() {
