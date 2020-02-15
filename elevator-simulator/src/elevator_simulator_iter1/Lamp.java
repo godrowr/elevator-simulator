@@ -21,5 +21,22 @@ class FloorLamp extends Lamp {
 
 
 class ElevatorLamp extends Lamp {
+	private int lampStatus;
+	private int lampFloor;
 	
+	public ElevatorLamp() {
+		
+	}
+	
+	public void lampOn() {
+		lampStatus = 1;
+	}
+	
+	public void lampOff() {
+		lampStatus = 0;
+	}
+	
+	public void setLampFloor(int lampFloor) {
+		this.lampFloor = lampFloor;
+	}
 }

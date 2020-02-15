@@ -18,7 +18,7 @@ public class Elevator_subsystem implements Runnable {
 	public Elevator_subsystem(Scheduler scheduler, int ElevatorNo) {
 		this.setScheduler(scheduler);
 		for(;ElevatorNo > 0; ElevatorNo--) {
-			elevators.add(new Elevator(ElevatorNo));
+			elevators.add(new Elevator(ElevatorNo,scheduler));
 			//System.out.println("Elevator Added");
 		}
 	}
@@ -60,23 +60,28 @@ public class Elevator_subsystem implements Runnable {
  */
 class Elevator {
 	private int ElevatorNo;
-	private Queue<ElevatorButton> buttonlist;
 	private int currFloor;
 	private int elevatorDirection;
 	private Motor motor;
 	private Door door;
+	private Scheduler scheduler;
 	
-	public Elevator(int ElevatorNo) {
+	public Elevator(int ElevatorNo, Scheduler scheduler) {
 		this.ElevatorNo = ElevatorNo;
 		this.motor = new Motor();
 		this.door = new Door();
-		// TODO Auto-generated constructor stub
+		this.currFloor = 0;
+		this.elevatorDirection = 0; //Direction 1 = up, 0 = rest, -1 = down
+		this.scheduler = scheduler;
 	}
 
 	public int getElevatorNo() {
 		return ElevatorNo;
 	}
 	
+	public void getInfoFromScheduler() {
+		scheduler.requestWork(currFloor,elevatorDirection);
+	}
 	/*
 	 * @param queue of all floors Elevator must stop at
 	 * Elevator is not functional and cannot serve request, therefore stall
@@ -96,10 +101,6 @@ class Elevator {
 		//System.out.println(this.buttonlist);
 	}
 	
-	public int getCurrFloor() {
-		return currFloor;
-	}
-
 	public void setCurrFloor(int currFloor) {
 		this.currFloor = currFloor;
 	}

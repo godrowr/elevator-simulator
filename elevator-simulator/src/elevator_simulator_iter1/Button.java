@@ -74,27 +74,20 @@ class FloorButton extends Button {
 
 class ElevatorButton extends Button {
 	private ElevatorLamp lamp;
-	private int floorNo;
-	private int curfloor;
+	private int destinationFloor;
 	
-	public ElevatorButton(int curfloor, int floorNo) {
-		this.setFloorNo(floorNo);
+	public ElevatorButton(int destinationFloor) {
+		this.destinationFloor = destinationFloor;
 	}
 
-	public int getCurfloor() {
-		return curfloor;
+	public int getDestinationFloor() {
+		return destinationFloor;
 	}
 
-	public void setCurfloor(int curfloor) {
-		this.curfloor = curfloor;
+	public void setDestinationFloor(int destinationFloor) {
+		this.destinationFloor = destinationFloor;
 	}
-
-	public int getFloorNo() {
-		return floorNo;
-	}
-
-	public void setFloorNo(int floorNo) {
-		this.floorNo = floorNo;
-	}
+	
+	
 	
 }
