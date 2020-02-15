@@ -30,8 +30,10 @@ public class Elevator_subsystem implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Queue buttons = scheduler.getElevatorRequest();
-		this.elevators.get(0).setButtonlist(buttons);
+		Queue elevatorButtons = scheduler.getElevatorRequest();
+		Queue floorButtons = scheduler.getFloorRequest();
+		this.elevators.get(0).setButtonlist(elevatorButtons, floorButtons);
+		this.elevators.get(0).doStuff();
 	}
 
 	public Scheduler getScheduler() {
@@ -60,9 +62,9 @@ public class Elevator_subsystem implements Runnable {
  */
 class Elevator {
 	private int ElevatorNo;
-	private Queue<ElevatorButton> buttonlist;
+	private Queue<ElevatorButton> elevatorButtonList;
+	private Queue<FloorButton> floorButtonList;
 	private int currFloor;
-	private int elevatorDirection;
 	private Motor motor;
 	private Door door;
 	
@@ -81,21 +83,30 @@ class Elevator {
 	 * @param queue of all floors Elevator must stop at
 	 * Elevator is not functional and cannot serve request, therefore stall
 	 */
-	public void setButtonlist(Queue<ElevatorButton> buttons) {
-		this.buttonlist = buttons;
-		if(!buttonlist.isEmpty()) {
-			
-			for(ElevatorButton eButton : buttonlist) {
-				System.out.println("Elevator is at " + eButton.getCurfloor());
-				System.out.println("Elevator requested at " + eButton.getFloorNo());
-			}
-		}
+	public void setButtonlist(Queue<ElevatorButton> elevatorButtons, Queue<FloorButtons> floorButtons) {
+		this.elevatorButtonList = elevatorButtons;
 		
+		this.floorButtonList =  floorButtons;
 		
 		//System.out.println("Updated buttonlist");
 		//System.out.println(this.buttonlist);
 	}
-	
+	public void doStuff(){
+		if(!elevatorButtonList.isEmpty() && !floorButtonList.isEmpty()) {
+			if(this.motor.getDir() == 0) {
+				//if idle, decide what button
+			}else if(this.motor.getDir()==1) {
+				//if going up, decide what button
+			}else if(this.motor.getDir()==-1) {
+				//if going down, decide what button
+			}
+			for(ElevatorButton eButton : buttonlist) {
+				System.out.println("Elevator is at " + eButton.getCurfloor());
+				System.out.println("Elevator requested at " + eButton.getFloorNo());
+				
+				
+			}
+	}
 	public int getCurrFloor() {
 		return currFloor;
 	}
@@ -139,6 +150,22 @@ class Motor {
 		this.timer = Instant.now().toEpochMilli();
 	}
 	
+	public void goUp() {
+		this.dir = 1;
+	}
+	
+	public void goDown() {
+		this.dir=-1;
+	}
+	
+	public void stop() {
+		this.dir=0;
+	}
+	
+	public int getDir() {
+		return this.dir;
+	}
+	
 	public double get_dist() {
 		long elapsed = (Instant.now().toEpochMilli() - timer);
 		double traveled = this.vel * elapsed * this.dir;
@@ -164,10 +191,15 @@ class Door {
 		this.open = false;
 	}
 	
-	public void toggle() {
-		this.open = ! this.open;
+	public void open() {
+		this.open = true;
+		System.out.println("Opening Door!");
 	}
 	
+	public void close() {
+		this.open = false;
+		System.out.println("Closing Door!");
+	}
 	public boolean is_open() {
 		return this.open;
 	}
