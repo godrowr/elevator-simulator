@@ -1,4 +1,4 @@
-//package elevator_simulator_iter1;
+package elevator_simulator_iter1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,13 +107,10 @@ class Motor {
 
 class Door {
 	
-	private Boolean doorOpen;// Track if the door is currently open, FOR I2
-	private Boolean doorClosed;// Track if the door is closed, FOR I2
+	private Boolean doorOpen;// True: Door is open, False: door is closed
 	
-	public Boolean getDoorOpen() { // FOR I2
+	public Boolean getDoorStatus() { // FOR I2
 		return this.doorOpen;
-	}
-	public Boolean getDoorClosed() { // FOR I2
-		return this.doorClosed;
+		//return: true if open
 	}
 }
