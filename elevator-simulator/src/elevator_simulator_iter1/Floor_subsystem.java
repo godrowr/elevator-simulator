@@ -82,6 +82,7 @@ public class Floor_subsystem implements Runnable{
 	public List<Button> inputFile() {
 		
 		List<Button> safecase = new ArrayList<Button>();
+		int count = 0;
 		
 		try {
 			List<String[]> morelines = new ArrayList<String[]>();
@@ -99,11 +100,12 @@ public class Floor_subsystem implements Runnable{
 			FloorButton floor;
 			ElevatorButton destination;
 			for(String[] line : morelines) {
-				floor = new FloorButton(line[0], Integer.parseInt(line[1]), line[2]);
-				destination = new ElevatorButton(Integer.parseInt(line[1]), Integer.parseInt(line[3]));
+				floor = new FloorButton(line[0], Integer.parseInt(line[1]), line[2], count);
+				destination = new ElevatorButton(Integer.parseInt(line[3]),count);
 				buttons.add(floor);
 				buttons.add(destination);
 				//System.out.println("Here");
+				count++;
 				return buttons;
 			}
 		} catch ( IOException e1) {

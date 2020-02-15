@@ -30,8 +30,9 @@ class FloorButton extends Button {
 	private int floor;
 	private String direction;
 	private FloorLamp lamp;
+	private int key;
 	
-	public FloorButton(String time, int floor, String direction) {
+	public FloorButton(String time, int floor, String direction, int key) {
 		this.setTime(time);
 		this.setFloor(floor);
 		this.setDirection(direction); 
@@ -75,9 +76,11 @@ class FloorButton extends Button {
 class ElevatorButton extends Button {
 	private ElevatorLamp lamp;
 	private int destinationFloor;
+	private int key;
 	
-	public ElevatorButton(int destinationFloor) {
+	public ElevatorButton(int destinationFloor, int key) {
 		this.destinationFloor = destinationFloor;
+		this.lamp = new ElevatorLamp(destinationFloor, 1);
 	}
 
 	public int getDestinationFloor() {

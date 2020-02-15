@@ -80,12 +80,14 @@ class Elevator {
 	}
 	
 	public void getInfoFromScheduler() {
-		scheduler.requestWork(currFloor,elevatorDirection);
+		int desintation = scheduler.requestWork(currFloor,elevatorDirection);
 	}
+	
+	/*
 	/*
 	 * @param queue of all floors Elevator must stop at
 	 * Elevator is not functional and cannot serve request, therefore stall
-	 */
+	 
 	public void setButtonlist(Queue<ElevatorButton> buttons) {
 		this.buttonlist = buttons;
 		if(!buttonlist.isEmpty()) {
@@ -100,6 +102,7 @@ class Elevator {
 		//System.out.println("Updated buttonlist");
 		//System.out.println(this.buttonlist);
 	}
+	*/
 	
 	public void setCurrFloor(int currFloor) {
 		this.currFloor = currFloor;
