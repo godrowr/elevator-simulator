@@ -98,7 +98,12 @@ class Elevator implements Runnable{
 				this.update();
 			}
 			System.out.println("El went to floor: "+ this.nextStop());
-
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
