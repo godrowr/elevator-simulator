@@ -77,7 +77,7 @@ class Elevator implements Runnable{
 																   this.nextStop());
 			
 			buttonlist.add(newButton);
-			System.out.println("El " + this.elevatorNo +" at: " + this.currFloor);
+			System.out.println("Elevator " + this.elevatorNo + " is currently at: " + this.currFloor);
 
 			if(nextStop() == currFloor){
 				// Wait so that we dont overload the system
@@ -91,7 +91,8 @@ class Elevator implements Runnable{
 				gotoFloor(this.nextStop());
 				this.update();
 			}
-			System.out.println("El went to floor: "+ this.nextStop());
+			System.out.println("Elevator " + this.elevatorNo + "'s doors open at floor: "+ this.nextStop());
+			System.out.println("Elevator " + this.elevatorNo + "'s doors closed");
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
