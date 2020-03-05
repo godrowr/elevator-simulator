@@ -1,100 +1,61 @@
 package elevator_simulator_iter1;
+import java.time.Instant;
 
 /**
  * 
  * @author Ryan Gaudreault
  *
  */
-public class Button {
-	private boolean push; 
+class Button {
+	private boolean pushed;
+	protected Lamp lamp; 
+	protected int floorNo;
+	protected int dest;
+
+	public Button(int floorNumber, int dest){
+		this.floorNo = floorNumber;
+		this.pushed = false;
+		this.dest = dest;
+
+	}
 	
 	public void pushButton() {
-		push = true;
-		//do something;
-		push = false;
+		if (!this.lamp.isOn()) {this.lamp.toggle();}
 	}
-	
-	public void turnOnLamp() {
-		
-	}
-
 }
 
-/**
- * This class exteneds Button but is responsible for interfacing with user requests for an elevator on a paticular floor. 
- * @author Ryan Gaudreault
- *
- */
+
 class FloorButton extends Button {
-	private String time;
-	private int floor;
-	private String direction;
-	private FloorLamp lamp;
+	private Instant time;
 	
-	public FloorButton(String time, int floor, String direction) {
-		this.setTime(time);
-		this.setFloor(floor);
-		this.setDirection(direction); 
+	public FloorButton(String time, int floor, int dest) {
+		super(floor, dest);
+		this.time = java.sql.Timestamp.valueOf(time).toInstant();
+		this.lamp = FloorLamp();
 	}
 
-	public String getTime() {
+	public Instant getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
-	}
-
 	public int getFloor() {
-		return floor;
+		return floorNo;
 	}
 
-	public void setFloor(int floor) {
-		this.floor = floor;
-	}
-
-	public String getDirection() {
-		return direction;
-	}
-
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
-
-	public FloorLamp getLamp() {
-		return lamp;
-	}
-
-	public void setLamp(FloorLamp lamp) {
-		this.lamp = lamp;
+	public int getDest() {
+		return dest;
 	}
 	
 }
 
 
 class ElevatorButton extends Button {
-	private ElevatorLamp lamp;
-	private int floorNo;
-	private int curfloor;
-	
-	public ElevatorButton(int curfloor, int floorNo) {
-		this.setFloorNo(floorNo);
-	}
-
-	public int getCurfloor() {
-		return curfloor;
-	}
-
-	public void setCurfloor(int curfloor) {
-		this.curfloor = curfloor;
+	public ElevatorButton(int floorNo, int dest) {
+		super(floorNo, dest);
+		this.lamp = ElevatorLamp();
 	}
 
 	public int getFloorNo() {
 		return floorNo;
 	}
-
-	public void setFloorNo(int floorNo) {
-		this.floorNo = floorNo;
-	}
-	
 }

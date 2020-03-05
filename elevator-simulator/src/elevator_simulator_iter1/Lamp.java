@@ -1,25 +1,44 @@
 package elevator_simulator_iter1;
 
-public class Lamp {
+/**
+ * 
+ * @author Xander May
+ *
+ */
+public abstract class Lamp {
+	private boolean on;
+	public Lamp () {
+		this.on = false;
+	}
 
+	public void toggle(){
+		this.on = !this.on;
+	}
+
+	public boolean isOn(){
+		return this.on;
+	}
 }
 
 /**
  * 
- * @author Ryan Gaudreault
+ * @author Xander May
  *
  */
 class FloorLamp extends Lamp {
-	private int floorNo;
-	private boolean on;
-	
-	public FloorLamp(int floorNo) {
-		this.floorNo = floorNo;
-		on = false; 
+	public FloorLamp (){
+		super();
 	}
 }
 
 
+/**
+ * 
+ * @author Xander May
+ *
+ */
 class ElevatorLamp extends Lamp {
-	
+	public ElevatorLamp (){
+		super();
+	}
 }

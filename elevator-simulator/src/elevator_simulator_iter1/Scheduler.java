@@ -1,8 +1,15 @@
 package elevator_simulator_iter1;
 
-import java.util.ArrayDeque;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
+import java.time.Instant;
+import java.lang.Math;
+
+
+enum Direction{
+	UP,
+	DOWN,
+	STOP
+}
 
 /**
  * 
@@ -10,78 +17,110 @@ import java.util.Queue;
  * @author Andrew Cowan
  */
 public class Scheduler implements Runnable{
-	private Queue<ElevatorButton> elevatorRequest; //These are the buttons pushed in the elevator.
-	private Queue<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
-	private boolean elevatorWriteable = true;
-	public Scheduler() {
+	private ArrayList<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
+	private FloorSubsystem floorSubsystem;
+	private Instant start;
 
-		elevatorRequest = new ArrayDeque<ElevatorButton>() ; //These are the buttons pushed in the elevator.
-		floorRequest = new ArrayDeque<FloorButton>(); //These are the buttons pushed on the floors by waiting patrons. 
-		elevatorWriteable = true;
-	}
-	/*
-	 * @param List of Button Objects
-	 * Thread safe method to add:
-	 * Elevator Buttons to elevatorRequest Queue
-	 * Floor Button to floorRequest Queue
-	 */
-	public synchronized void inputButtonInfo(List<Button> buttons) {
-		
-		while(!elevatorWriteable) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				System.err.println(e);
-			}
-		}
-		//System.out.println(buttons);
-		elevatorWriteable = false;
-		
-		FloorButton fButton = (FloorButton) buttons.get(0);
-		floorRequest.add(fButton);
-		
-		ElevatorButton eButton = (ElevatorButton) buttons.get(1);
-		elevatorRequest.add(eButton);
-		
-		elevatorWriteable = true;
-		buttons.clear();
-		notifyAll();
-	}
+	public Scheduler() {
+		// TO DELETE
+		// elevatorRequest = new ArrayDeque<ElevatorButton>() ; //These are the buttons pushed in the elevator.
+		this.floorSubsystem = new FloorSubsystem();
 	
-	/*
-	 * Receive info from Arrival Sensor
-	 * Determine elevator direction, clear Lamp/Button
-	 * TO BE IMPLEMENTED IN ITERATION 2
-	 * @param ArrivalSensor
-	 */
-	private void inputArrivalInfo(ArrivalSensor floorArrived) {
-		
-		while(!elevatorWriteable) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				System.err.println(e);
-			}
-		}
-		
-		elevatorWriteable = false;
-		
-		for(ElevatorButton eButton : elevatorRequest) {
-			if(eButton.getCurfloor() == floorArrived.getCurFloor()) {
-				
-			}
-		}
-		
-		elevatorWriteable = true;
-		notifyAll();
+		// Tell the subsystem to read in the values from the file
+		floorSubsystem.parseFile();
+
+		// Record start time
+		this.start = Instant.now();
+
+		//These are the buttons pushed on the floors by waiting patrons. 
+		// This will get updated every query period by scheduler
+		floorRequest = new ArrayList<FloorButton>(); 
 	}
-	
+
+	/**
+	 * Query the floor subsystem for the new list of floors
+	 * 
+	 */
+	private void querySubsystem(){
+		Instant elapsed = Instant.now().minus(this.start);
+		ArrayList<FloorButton> newReqs = this.floorSubsystem.getRequest(elapsed);
+		// Add all the new requests to our list of requests
+		for(FloorButton req: newReqs){
+			floorRequest.add(req);
+		}
+	}
+
+
 	/*
 	 * Scheduler receives info from elevator (direction, current floor)
+	 * Only returns next closest person in same direction (dont starve other elevators)
 	 * @returns appropriate floorButton for elevator to service
 	 */
-	private void getFloorButton(Elevator elevator) {
-		
+	private synchronized ElevatorButton getNextFloor(int current, int dest) {
+		boolean isEmpty;
+		Direction dir;
+		// Figure out state of the elevator
+		if (current - dest < 0){
+			dir = Direction.UP;
+			isEmpty = false;
+		} else if (current - dest > 0){
+			dir = Direction.DOWN;
+			isEmpty = false;
+		} else {
+			dir = Direction.STOP;
+			isEmpty = true;
+		}
+
+		// Figure out next person in line
+		FloorButton nextClosest = null;
+		int counter = 0;
+		int closestLoc = -1;
+		for (FloorButton req: floorRequest) {
+			// This should always execute first
+			if (nextClosest == null) {
+				nextClosest = req;
+				closestLoc = counter;
+				counter += 1;
+				continue;
+			} else if ((req.getFloor() < current && dir == Direction.UP) || 
+				(req.getFloor() > current && dir == Direction.DOWN)){
+					// We dont service people not in our way
+					counter += 1;
+					continue;
+			} else if (dir == Direction.STOP){
+				// Abs in case next closest is below / above
+				// Check if the next request is closer than the
+				// stored next closest value. If so, it becomes next
+				// closest value.
+				if(Math.abs(current - nextClosest.getFloor()) > 
+				   Math.abs(current - req.getFloor())){
+					nextClosest = req;
+					closestLoc = counter;
+					counter += 1;
+					continue;
+				}
+			} else if(Math.abs(current - nextClosest.getFloor()) > 
+					  Math.abs(current - req.getFloor())){
+				// Getting to this elseif means that we've got a valid floor
+				// that is in our path and we arent stopped.
+				nextClosest = req;
+				closestLoc = counter;
+				counter += 1;
+				continue;
+		 	}
+
+		}
+
+		// Create the thing that we pass back to the elevator
+		if (nextClosest == null && dir == Direction.STOP) {
+			ElevatorButton nextStop = new ElevatorButton(1, 1);
+		} else if (nextClosest == null && dir != Direction.STOP) {
+			ElevatorButton nextStop = new ElevatorButton(-1, -1);
+		} else {
+			ElevatorButton nextStop = new ElevatorButton(nextClosest.getFloor(),
+													     nextClosest.getDest());
+		}
+		return nextStop;
 	}
 
 	@Override
