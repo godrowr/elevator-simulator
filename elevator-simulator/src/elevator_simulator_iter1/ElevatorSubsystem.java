@@ -6,11 +6,7 @@ import java.util.Queue;
 import java.time.Clock;
 import java.time.Instant;
 
-/**
- * 
- * @author Ryan Gaudreault
- *
- */
+
 public class ElevatorSubsystem  {
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
 	private ArrayList<Thread> threads = new ArrayList<Thread>();
@@ -33,11 +29,7 @@ enum State {
 	STOPPED
 }
 
-/**
- * 
- * @author Ryan Gaudreault
- *
- */
+
 class Elevator implements Runnable{
 	private ArrayList<ElevatorButton> buttonlist;
 	private int currFloor;

@@ -1,11 +1,8 @@
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-/**
- * This main class creates the three subsystem threads along with thier respective objects and starts them. 
- * @author Ryan Gaudreault
- *
- */
+
+
 public class Main {
 	
 	public static void main(String[] args) {

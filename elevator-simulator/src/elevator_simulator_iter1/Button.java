@@ -1,11 +1,7 @@
 
 import java.time.Instant;
 
-/**
- * 
- * @author Ryan Gaudreault
- *
- */
+
 class Button {
 	private boolean pushed;
 	protected Lamp lamp; 

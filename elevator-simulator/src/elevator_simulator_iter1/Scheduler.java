@@ -10,11 +10,8 @@ enum Direction{
 	STOP
 }
 
-/**
- * 
- * @author Ryan Gaudreault
- * @author Andrew Cowan
- */
+
+
 public class Scheduler implements Runnable{
 	private ArrayList<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
 	private FloorSubsystem floorSubsystem;
