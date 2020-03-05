@@ -19,7 +19,7 @@ public class Main {
 		int floorNo = Integer.parseInt(input.nextLine());
 		*/
 		schedule = new Scheduler();
-		elevatorsys = new ElevatorSubsystem(schedule, 1);
+		elevatorsys = new ElevatorSubsystem(schedule, 2);
 		floorsys = new FloorSubsystem();
 		schedulerSystem = new Thread (schedule,"Scheduler");
 		

@@ -11,9 +11,9 @@ public class ElevatorSubsystem  {
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
 	private ArrayList<Thread> threads = new ArrayList<Thread>();
 
-	public ElevatorSubsystem(Scheduler scheduler, int ElevatorNo) {
-		for(;ElevatorNo > 0; ElevatorNo--) {
-			Elevator e = new Elevator(scheduler);
+	public ElevatorSubsystem(Scheduler scheduler, int elevatorNo) {
+		for(;elevatorNo > 0; elevatorNo--) {
+			Elevator e = new Elevator(scheduler, elevatorNo);
 			Thread t = new Thread(e, "Elevator");
 			t.start();
 			elevators.add(e);
@@ -37,10 +37,12 @@ class Elevator implements Runnable{
 	private Door door;
 	private Scheduler scheduler;
 	private State state;
+	private int elevatorNo;
 	
-	public Elevator(Scheduler sched) {
+	public Elevator(Scheduler sched, int elevatorNo) {
 		this.buttonlist = new ArrayList<ElevatorButton> ();
 		this.currFloor = 1;
+		this.elevatorNo = elevatorNo;
 		this.motor = new Motor();
 		this.door = new Door();
 		this.scheduler = sched;
@@ -75,7 +77,7 @@ class Elevator implements Runnable{
 																   this.nextStop());
 			
 			buttonlist.add(newButton);
-			System.out.println("El at: " + this.currFloor);
+			System.out.println("El " + this.elevatorNo +" at: " + this.currFloor);
 
 			if(nextStop() == currFloor){
 				// Wait so that we dont overload the system
