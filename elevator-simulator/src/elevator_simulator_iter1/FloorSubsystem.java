@@ -1,4 +1,4 @@
-package elevator_simulator_iter1;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +17,7 @@ enum FloorType {
 
 public class FloorSubsystem {
 	private static final int NUMFLOORS = 5;
+	private int you = 0;
 	private List<Floor> floors = new ArrayList<Floor>();
 	private ArrayList<FloorButton> buttons = new ArrayList<FloorButton>();
 
@@ -53,7 +54,7 @@ public class FloorSubsystem {
 			e1.printStackTrace();
 		} 
 		for(String[] line : morelines) {
-			FloorButton request = new FloorButton(line[0], Integer.parseInt(line[1]), Integer.parseInt(line[3]));
+			FloorButton request = new FloorButton(line[0]+" "+line[1], Integer.parseInt(line[2]), Integer.parseInt(line[4]));
 			buttons.add(request);
 		}
 	}
@@ -64,20 +65,20 @@ public class FloorSubsystem {
 	*/
 	public ArrayList<FloorButton> getRequest(Instant time){
 		ArrayList<FloorButton> tempButtons = new ArrayList<FloorButton>();
-		int counter;
+		int counter = 0;
 		for(FloorButton button: buttons){
 			// if this param is greater positive value
 			// if this param is equal zero value
 			// if this param is lesser negative value
-			if(time.compareTo(button.getTime()) >= 0){
-				tempButtons.add(button);
-				this.buttons.remove(counter);
+			// CHANGED THIS BACK TO if(time.compareTo(button.getTime()) >= 0){ 
+			tempButtons.add(button);
+			//	this.buttons.remove(counter);
 				// We dont increment counter when removing from array because
 				// indices change
-			} else {
+			//} else {
 				// Increment if we didnt
-				counter+=1;
-			}
+			//	counter+=1;
+			//}
 		}
 		return tempButtons;
 	}

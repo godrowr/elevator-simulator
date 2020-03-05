@@ -1,7 +1,6 @@
 /**
  * 
  */
-package elevator_simulator_iter1;
 
 import java.util.*;
 import org.junit.jupiter.api.*;

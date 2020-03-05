@@ -1,4 +1,4 @@
-package elevator_simulator_iter1;
+
 import java.lang.Thread;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,34 +12,19 @@ import java.time.Instant;
  *
  */
 public class ElevatorSubsystem  {
-	private Scheduler scheduler;
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
+	private ArrayList<Thread> threads = new ArrayList<Thread>();
 
-	public Elevator_subsystem(Scheduler scheduler, int ElevatorNo) {
-		this.setScheduler(scheduler);
+	public ElevatorSubsystem(Scheduler scheduler, int ElevatorNo) {
 		for(;ElevatorNo > 0; ElevatorNo--) {
-			elevators.add(new Elevator(ElevatorNo));
+			Elevator e = new Elevator(scheduler);
+			Thread t = new Thread(e, "Elevator");
+			t.start();
+			elevators.add(e);
+			threads.add(t);
 			//System.out.println("Elevator Added");
 		}
 	}
-	
-	public void getInfoFromScheduler() {
-		Queue buttons = scheduler.getElevatorRequest();
-		this.elevators.get(0).setButtonlist(buttons);
-	}
-
-	public void setScheduler(Scheduler scheduler) {
-		this.scheduler = scheduler;
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		while(true) {
-			getInfoFromScheduler();
-		}
-	}
-
 
 }
 
@@ -69,33 +54,15 @@ class Elevator implements Runnable{
 		this.scheduler = sched;
 	}
 	
-	/*
-	 * @param queue of all floors Elevator must stop at
-	 * Elevator is not functional and cannot serve request, therefore stall
-	 */
-	public void setButtonlist(Queue<ElevatorButton> buttons) {
-		this.buttonlist = buttons;
-		if(!buttonlist.isEmpty()) {
-			
-			for(ElevatorButton eButton : buttonlist) {
-			}
-		}
-		
-		
-		//System.out.println("Updated buttonlist");
-		//System.out.println(this.buttonlist);
-	}
-
-
 	private int nextStop(){
 		// Figure out next person in line
-		FloorButton nextClosest = null;
-		for (FloorButton req: floorRequest) {
+		ElevatorButton nextClosest = null;
+		for (ElevatorButton req: buttonlist) {
 			if (nextClosest == null) {
 				nextClosest = req;
 				continue;
-			} else if(Math.abs(current - nextClosest.getFloor()) > 
-				      Math.abs(current - req.getFloor())){
+			} else if(Math.abs(currFloor - nextClosest.getFloor()) > 
+				      Math.abs(currFloor - req.getFloor())){
 				nextClosest = req;
 				continue;
 			}
@@ -111,18 +78,26 @@ class Elevator implements Runnable{
 
 	@Override
 	public void run(){
-		while(1){
+		while(true){
 			ElevatorButton newButton = this.scheduler.getNextFloor(currFloor,
 																   this.nextStop());
+			
 			buttonlist.add(newButton);
+			System.out.println("El at: " + this.currFloor);
 
 			if(nextStop() == currFloor){
 				// Wait so that we dont overload the system
-				Thread.sleep(1000); 
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
 			}else{
 				gotoFloor(this.nextStop());
-
+				this.update();
 			}
+			System.out.println("El went to floor: "+ this.nextStop());
 
 		}
 		
@@ -134,15 +109,14 @@ class Elevator implements Runnable{
 	 */
 	private void update(){
 		// Figure out next person in line
-		int counter = 0;
-		for (FloorButton req: floorRequest) {
+		ArrayList<ElevatorButton> remove = new ArrayList<ElevatorButton>();
+		for (ElevatorButton req: buttonlist) {
 			// This should always execute first
 			if (req.getFloor() == currFloor) {
-				buttonlist.remove(counter);
-				continue;
+				remove.add(req);
 			}
-			counter += 1;
 		}
+		this.buttonlist.removeAll(remove);
 	}
 	
 	private void gotoFloor(int floorNumber) {
@@ -171,7 +145,12 @@ class Motor {
 	public void travelNum(int num_floors){
 		travelling = true;
 
-		Thread.sleep(DELAY * num_floors);
+		try {
+			Thread.sleep(DELAY * num_floors);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		travelling = false;
 	}
 	public boolean isTravelling() {

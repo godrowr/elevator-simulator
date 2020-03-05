@@ -1,4 +1,4 @@
-package elevator_simulator_iter1;
+
 import java.time.Instant;
 
 /**
@@ -30,8 +30,9 @@ class FloorButton extends Button {
 	
 	public FloorButton(String time, int floor, int dest) {
 		super(floor, dest);
+		System.out.println(time);
 		this.time = java.sql.Timestamp.valueOf(time).toInstant();
-		this.lamp = FloorLamp();
+		this.lamp = new FloorLamp();
 	}
 
 	public Instant getTime() {
@@ -52,10 +53,10 @@ class FloorButton extends Button {
 class ElevatorButton extends Button {
 	public ElevatorButton(int floorNo, int dest) {
 		super(floorNo, dest);
-		this.lamp = ElevatorLamp();
+		this.lamp = new ElevatorLamp();
 	}
 
-	public int getFloorNo() {
+	public int getFloor() {
 		return floorNo;
 	}
 }
