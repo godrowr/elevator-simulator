@@ -55,4 +55,8 @@ class ElevatorButton extends Button {
 	public int getFloor() {
 		return floorNo;
 	}
+	
+	public int getDest() {
+		return dest;
+	}
 }

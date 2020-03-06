@@ -1,5 +1,10 @@
 
 import java.util.*;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+import java.net.*;
 import java.time.Instant;
 import java.lang.Math;
 import java.net.InetAddress;
@@ -17,8 +22,10 @@ public class Scheduler implements Runnable{
 	private ArrayList<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
 	private FloorSubsystem floorSubsystem;
 	private Instant start;
+	private Buffer buffer;
+	private UDP uDP;
 
-	public Scheduler() {
+	public Scheduler(Buffer buffer, int elevatorNo) {
 		// TO DELETE
 		// elevatorRequest = new ArrayDeque<ElevatorButton>() ; //These are the buttons pushed in the elevator.
 		this.floorSubsystem = new FloorSubsystem();
@@ -32,6 +39,20 @@ public class Scheduler implements Runnable{
 		//These are the buttons pushed on the floors by waiting patrons. 
 		// This will get updated every query period by scheduler
 		floorRequest = new ArrayList<FloorButton>(); 
+		
+		this.buffer = buffer;
+		
+		//
+		for(;elevatorNo > 0; elevatorNo--) {
+			Worker w = null;
+			try {
+				w = new Worker(750+elevatorNo,70+elevatorNo,InetAddress.getLocalHost(),buffer);
+			}catch(Exception e) {
+				System.out.println(e);
+			}
+			Thread t = new Thread(w, "Workers");
+			t.start();
+		}
 	}
 
 	/**
@@ -53,9 +74,15 @@ public class Scheduler implements Runnable{
 	 * Only returns next closest person in same direction (dont starve other elevators)
 	 * @returns appropriate floorButton for elevator to service
 	 */
-	public synchronized ElevatorButton getNextFloor(int current, int dest) {
+	public synchronized void getNextFloor() {
 		boolean isEmpty;
 		Direction dir;
+		
+		int[] getFromBuffer = buffer.get();
+		int elevatorNo = getFromBuffer[0];
+		int current = getFromBuffer[1];
+		int dest = getFromBuffer[2];
+		
 		// Figure out state of the elevator
 		if (current - dest < 0){
 			dir = Direction.UP;
@@ -120,7 +147,17 @@ public class Scheduler implements Runnable{
 		ArrayList<FloorButton> remove = new ArrayList<FloorButton>();
 		remove.add(nextClosest);
 		this.floorRequest.removeAll(remove);
-		return nextStop;
+		
+		//Do UDP send to elevator
+		
+		try {
+			uDP = new UDP(elevatorNo+749,elevatorNo+60,InetAddress.getByName("100000"));
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		String returnMsg = "" + nextStop.getFloor() + nextStop.getDest();
+		uDP.sendByte(returnMsg.getBytes());
 	}
 
 	@Override
@@ -129,6 +166,7 @@ public class Scheduler implements Runnable{
 
 		querySubsystem();
 		while(true) {
+			getNextFloor();
 		}
 	}
 
