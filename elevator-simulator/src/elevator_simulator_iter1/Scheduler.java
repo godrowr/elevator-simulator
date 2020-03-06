@@ -2,6 +2,7 @@
 import java.util.*;
 import java.time.Instant;
 import java.lang.Math;
+import java.net.InetAddress;
 
 
 enum Direction{
@@ -132,3 +133,26 @@ public class Scheduler implements Runnable{
 	}
 
 }
+
+class Worker implements Runnable {
+	
+	private UDP uDP;
+	private Buffer buffer;
+	
+	//Note receive port and send port must be hard coded between elevator and scheduler
+		public Worker(int receivePortNum, int sendPortNum, InetAddress iPAddress, Buffer buffer) {
+			try {
+				UDP uDP = new UDP(receivePortNum,sendPortNum,InetAddress.getByName("100000"));
+			}catch(Exception e) {
+				System.out.println(e);
+			}
+			this.buffer = buffer;
+		}
+		
+		public void run() {
+			while(true) {
+				buffer.add(uDP.receive());
+			}
+		}
+}
+

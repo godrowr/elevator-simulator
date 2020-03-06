@@ -49,9 +49,9 @@ class Elevator implements Runnable{
 		this.door = new Door();
 		try {
 			UDP uDP = new UDP(elevatorNo+749,elevatorNo+750,InetAddress.getByName("100000"));
-			}catch(Exception e) {
-				System.out.println(e);
-			}
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 		this.scheduler = sched;
 	}
 	
