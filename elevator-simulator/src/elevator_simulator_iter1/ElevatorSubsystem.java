@@ -1,5 +1,6 @@
 
 import java.lang.Thread;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -38,6 +39,7 @@ class Elevator implements Runnable{
 	private Scheduler scheduler;
 	private State state;
 	private int elevatorNo;
+	private UDP uDP;
 	
 	public Elevator(Scheduler sched, int elevatorNo) {
 		this.buttonlist = new ArrayList<ElevatorButton> ();
@@ -45,6 +47,11 @@ class Elevator implements Runnable{
 		this.elevatorNo = elevatorNo;
 		this.motor = new Motor();
 		this.door = new Door();
+		try {
+			UDP uDP = new UDP(elevatorNo+749,elevatorNo+750,InetAddress.getByName("100000"));
+			}catch(Exception e) {
+				System.out.println(e);
+			}
 		this.scheduler = sched;
 	}
 	
@@ -73,10 +80,13 @@ class Elevator implements Runnable{
 	@Override
 	public void run(){
 		while(true){
-			ElevatorButton newButton = this.scheduler.getNextFloor(currFloor,
-																   this.nextStop());
-			
-			buttonlist.add(newButton);
+			//Elevator sends string with [elevatorNo,currFloor,nextStop]
+			String message = "" + elevatorNo + currFloor+ this.nextStop();
+			uDP.sendByte(message.getBytes());
+			//Elevator receive response from scheduler
+			byte[] receiveMsg = uDP.receive();
+			//decode response and create ElevatorButton to add to buttonlist
+			buttonlist.add(decodeMsg(receiveMsg));
 			System.out.println("Elevator " + this.elevatorNo + " is currently at: " + this.currFloor);
 
 			if(nextStop() == currFloor){
@@ -125,6 +135,13 @@ class Elevator implements Runnable{
 		if (this.door.isOpen()) {this.door.toggle();}
 		if (this.motor.isTravelling()) {this.motor.travelNum(num_floors);}
 		this.currFloor = floorNumber;
+	}
+	
+	/*
+	 * Byte 0 floorNo, Byte 1 dest
+	 */
+	private ElevatorButton decodeMsg(byte[] inputMsg) {
+		return new ElevatorButton(inputMsg[0],inputMsg[1]);
 	}
 	
 }

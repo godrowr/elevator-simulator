@@ -32,7 +32,7 @@ public class UDP{
 	}
 	
 
-	private byte[] receive(){
+	public byte[] receive(){
 	
 		byte data[] = new byte[100];
 		receivePacket = new DatagramPacket(data, data.length);
