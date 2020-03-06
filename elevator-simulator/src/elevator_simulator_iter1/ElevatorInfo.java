@@ -12,6 +12,6 @@ public class ElevatorInfo{
 	}
 	
 	public int[] getElements() {
-		return (new int{this.dest, this.current, this.elevatorNo});
+		return (new int[]{this.dest, this.current, this.elevatorNo});
 	}
 }
