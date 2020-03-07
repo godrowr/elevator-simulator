@@ -42,6 +42,11 @@ class SchedulerTest {
 	@DisplayName("Scheduler <> Test")
 	public void testDecode() {
 		
+		Buffer buffer = new Buffer();
+		byte[] data = new byte[3];
+		RecvData recv = data;
+		
+		scheduler.decodeMsg();
 //		scheduler.inputButtonInfo(buttonList);
 //		Queue<ElevatorButton> elevatorButtons = scheduler.getElevatorRequest();
 //		for (ElevatorButton testButton : elevatorButtons) {

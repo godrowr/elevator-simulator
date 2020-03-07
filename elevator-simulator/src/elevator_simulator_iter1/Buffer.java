@@ -3,8 +3,8 @@ package elevator_simulator_iter1;
 import java.util.*;
 
 /**
- * 
- *
+ * The Buffer class which holds an array of Recvdata objects. The buffer is called to provide the RecvData objects in order
+ * and keeps all data stored in one location. 
  */
 public class Buffer {
 	
@@ -12,14 +12,16 @@ public class Buffer {
 	private boolean empty;
 	
 	/*
-	 * [[elevatorNo,current,dest],[elevatorNo,current,dest]]
+	 * Creates an empty buffer. 
 	 */
 	public Buffer() {
 		empty = true;
 	}
-	/*
-	 * receive packet with format: elevatorNo, current, dest
+	
+	/**
+	 * Receives packet with format: elevatorNo, current, dest
 	 * adds ElevatorInfo object to storage
+	 * @param inputPacket The value to add the storage of RecvData objects. 
 	 */
 	public synchronized void add(RecvData inputPacket) {
 		storage.add(inputPacket);
@@ -31,7 +33,6 @@ public class Buffer {
 	 */
 	public synchronized RecvData get() {
 		while(empty) {
-			// Wow such conditional synchronization
 			try {
 				wait();
 			}catch(Exception e) {

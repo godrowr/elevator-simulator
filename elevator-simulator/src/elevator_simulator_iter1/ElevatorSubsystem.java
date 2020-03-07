@@ -11,13 +11,19 @@ import java.time.Clock;
 import java.time.Instant;
 
 /**
- * 
+ * This is the ElevatorSubsysem which creates the elevators in the building, starts them and manages their threads. 
  *
  */
 public class ElevatorSubsystem  {
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
 	private ArrayList<Thread> threads = new ArrayList<Thread>();
 
+	/**
+	 * The constructor for the ElevatorSubsystem, builds as many elevators as specified and assigns them to 
+	 * the specific scheduler. 
+	 * @param scheduler The scheduler of the system
+	 * @param elevatorNo The number of elevators in the building 
+	 */
 	public ElevatorSubsystem(Scheduler scheduler, int elevatorNo) {
 		for(;elevatorNo > 0; elevatorNo--) {
 			Elevator e = new Elevator(scheduler, elevatorNo);
@@ -25,7 +31,6 @@ public class ElevatorSubsystem  {
 			t.start();
 			elevators.add(e);
 			threads.add(t);
-			//System.out.println("Elevator Added");
 		}
 	}
 

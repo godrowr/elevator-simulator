@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 import java.net.*;
 
 /**
- * 
- *
+ * The UDP class that is responsible for establishing communications with several classes if they are on different 
+ * computer systems in a network. 
  */
 public class UDP{
 

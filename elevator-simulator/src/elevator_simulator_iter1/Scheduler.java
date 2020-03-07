@@ -81,7 +81,6 @@ public class Scheduler implements Runnable{
 		int current = val[1];
 		int dest = val[2];
 		
-		
 		// Figure out state of the elevator
 		if (current - dest < 0){
 			dir = Direction.UP;
