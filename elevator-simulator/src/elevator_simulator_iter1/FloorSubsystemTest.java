@@ -11,7 +11,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-
+/**
+ * 
+ * @author Ryan Godrow
+ *
+ */
 class FloorSubsystemTest {
 	
 	private static FloorSubsystem floorSystem = new FloorSubsystem();

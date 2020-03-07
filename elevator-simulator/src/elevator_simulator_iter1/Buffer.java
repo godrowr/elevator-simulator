@@ -2,6 +2,10 @@ package elevator_simulator_iter1;
 
 import java.util.*;
 
+/**
+ * 
+ *
+ */
 public class Buffer {
 	
 	private ArrayList<RecvData> storage = new ArrayList<RecvData>();

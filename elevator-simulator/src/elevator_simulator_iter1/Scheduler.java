@@ -18,11 +18,14 @@ enum Direction{
 }
 
 
-
+/**
+ * The Scheduler Subsystem is repsonsible for managing the requests from the floor subsystem and the elevators 
+ * that attend to the requests in the elevator subsystem. 
+ */
 public class Scheduler implements Runnable{
 	private ArrayList<FloorButton> floorRequest; //These are the buttons pushed on the floors by waiting patrons. 
-	private FloorSubsystem floorSubsystem;
-	private Instant start;
+	private FloorSubsystem floorSubsystem; //This is the floorsubsystem of the model. 
+	private Instant start; //This value is the specific instance of time that 
 	private Buffer buffer;
 	private UDP uDP;
 
@@ -51,7 +54,6 @@ public class Scheduler implements Runnable{
 
 	/**
 	 * Query the floor subsystem for the new list of floors
-	 * 
 	 */
 	private void querySubsystem(){
 		//Instant elapsed = Instant.now().minus(this.start);
@@ -66,13 +68,11 @@ public class Scheduler implements Runnable{
 	/*
 	 * Scheduler receives info from elevator (direction, current floor)
 	 * Only returns next closest person in same direction (dont starve other elevators)
-	 * @returns appropriate floorButton for elevator to service
 	 */
 	public synchronized void getNextFloor() {
 		boolean isEmpty;
 		Direction dir;
 		
-		//FIX THIS 
 		RecvData getFromBuffer = buffer.get();
 		
 		int[] val = decodeMsg(getFromBuffer);
@@ -80,7 +80,6 @@ public class Scheduler implements Runnable{
 		int elevatorNo = val[0];
 		int current = val[1];
 		int dest = val[2];
-		//FIX THIS
 		
 		
 		// Figure out state of the elevator
@@ -179,8 +178,10 @@ public class Scheduler implements Runnable{
 		}
 	}
 	
-	/*
-	 * Byte 0 floorNo, Byte 1 dest
+	/**
+	 * Byte 0 floorNo, Byte 1 dest. This method converts the data from RecvData into collection of ints. 
+	 * @param getFromBuffer The object that carries data from one system to another. 
+	 * @return r The values of floorNo and destination in integers. 
 	 */
 	private int[] decodeMsg(RecvData getFromBuffer) {
 		byte b = getFromBuffer.data[0];
@@ -206,33 +207,5 @@ public class Scheduler implements Runnable{
 	}
 	
 
-}
-
-class Worker implements Runnable {
-	
-	private UDP uDP;
-	private Buffer buffer;
-	 
-	//Note receive port and send port must be hard coded between elevator and scheduler
-		public Worker(int receivePortNum, int sendPortNum, InetAddress iPAddress, Buffer buffer) {
-			try {
-				System.out.println("Worker binding on port" + receivePortNum);
-				UDP uDP = new UDP(receivePortNum, sendPortNum, InetAddress.getByName("127.0.0.1"));
-				System.out.println("Worker bound to port" + receivePortNum);
-				System.out.print(uDP);
-				System.out.println(" Line 184");
-			}catch(Exception e) {
-				System.out.println("Err on 187 "+e);
-			}
-			this.buffer = buffer;
-		}
-		
-		public void run() {
-			while(true) {
-				System.out.print(uDP);
-				System.out.println(" Line 195");
-				buffer.add(uDP.receive());
-			}
-		}
 }
 

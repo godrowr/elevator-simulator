@@ -10,7 +10,10 @@ import java.util.concurrent.TimeUnit;
 import java.time.Clock;
 import java.time.Instant;
 
-
+/**
+ * 
+ *
+ */
 public class ElevatorSubsystem  {
 	private ArrayList<Elevator> elevators = new ArrayList<Elevator>();
 	private ArrayList<Thread> threads = new ArrayList<Thread>();
@@ -33,7 +36,12 @@ enum State {
 	STOPPED
 }
 
-
+/**
+ * This is an elevator object, and will move from one part of the building to the next. 
+ * It includes a Door and a Motor, along with a state of either {Moving, Stopped} and 
+ * holds the current floor values (int) along with a buttonlist of buttons inside the 
+ * elevator. 
+ */
 class Elevator implements Runnable{
 	private ArrayList<ElevatorButton> buttonlist;
 	private int currFloor;
@@ -52,6 +60,11 @@ class Elevator implements Runnable{
 		this.scheduler = sched;
 	}
 	
+	/**
+	 * The nextStop() method reads the button list, determines the closest request and 
+	 * returns the floor number of the closest stop.
+	 * @return floorNo returns the floor number of the closest stop. 
+	 */
 	private int nextStop(){
 		// Figure out next person in line
 		ElevatorButton nextClosest = null;
@@ -73,7 +86,11 @@ class Elevator implements Runnable{
 		}
 	}
 
-
+	/**
+	 * This starts the elevator and binds all commands to said elevator to a port. When the elevator receives
+	 * a command it moves to the floor, opens its doors, picks up a passenger and moves to the destination of 
+	 * the passenger. It repeats this forever. 
+	 */
 	@Override
 	public void run(){
 		while(true){
@@ -152,6 +169,10 @@ class Elevator implements Runnable{
 		this.buttonlist.removeAll(remove);
 	}
 	
+	/**
+	 * This method sets the current floor of the elevator. 
+	 * @param floorNumber The floor the elevator moved to and is now at. 
+	 */
 	private void gotoFloor(int floorNumber) {
 		// Make sure to close the doors
 		int num_floors = Math.abs(this.currFloor - floorNumber);
@@ -160,8 +181,11 @@ class Elevator implements Runnable{
 		this.currFloor = floorNumber;
 	}
 	
-	/*
-	 * This converts bytes back into its string format then converted into ints for easier use. 
+	/**
+	 * This converts byte array information into an int. Since the message was created from a
+	 * string, it must be converted back into a string then converted into an int. 
+	 * @param inputMsg The byte array data received. 
+	 * @return ElevatorButton a button pressed in an elevator to drop a patron off. 
 	 */
 	private ElevatorButton decodeMsg(byte[] inputMsg) {
 		byte b = inputMsg[0];//get floor
@@ -178,12 +202,11 @@ class Elevator implements Runnable{
 	
 }
 
-
+/**
+ * This class imitates the actions of the motor, moving the elevator from one floor to the next. 
+ */
 class Motor {
-	/**
-	 * Vel is velocity of the elevator in the shaft, should always be > 0
-	 * Dir is travel directon. 1 is up, 0  is stationary, -1 is down.
-	 */
+
 	private static final long DELAY = 2000; // ms per floor
 	private boolean travelling;
 	
@@ -207,6 +230,9 @@ class Motor {
 	}
 }
 
+/**
+ * This class imitates the actions of the door and the time it lasts when opening and closing. 
+ */
 class Door {
 	private boolean open;
 	Door(){

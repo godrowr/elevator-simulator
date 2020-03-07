@@ -11,7 +11,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-
+/**
+ * ElevatorSubsystemTest tests the functions of ElevatorSubsystem such as NextStop, Decode, Update, and GotoFloor. 
+ * @author RG
+ */
 class ElevatorSubsystemTest {
 	
 	private static ElevatorSubsystem elevatorSystem;
