@@ -18,7 +18,7 @@ public class Main {
 		System.out.println("Number of Floors in the building?");
 		int floorNo = Integer.parseInt(input.nextLine());
 		*/
-		schedule = new Scheduler();
+		schedule = new Scheduler(2);
 		elevatorsys = new ElevatorSubsystem(schedule, 2);
 		floorsys = new FloorSubsystem();
 		schedulerSystem = new Thread (schedule,"Scheduler");

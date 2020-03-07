@@ -24,7 +24,7 @@ public class UDP{
 	private void initializeSocket(){
 	
 		try {
-		   sendReceiveSocket = new DatagramSocket(receivePortNum);
+		    sendReceiveSocket = new DatagramSocket(receivePortNum);
 	   } catch (SocketException se) {
 		   se.printStackTrace();
 		   System.exit(1);
@@ -32,7 +32,7 @@ public class UDP{
 	}
 	
 
-	public byte[] receive(){
+	public RecvData receive(){
 	
 		byte data[] = new byte[100];
 		receivePacket = new DatagramPacket(data, data.length);
@@ -43,18 +43,14 @@ public class UDP{
 			System.out.println(e);
 			System.exit(1);
 		}
-		
-		return data;
+		RecvData recv = new RecvData();
+		recv.data = data;
+		recv.port = receivePacket.getPort();
+		return recv;
 	}
 	
 	public void sendByte(byte[] inputMsg){
-		   
-		try {
-			sendPacket = new DatagramPacket(inputMsg,inputMsg.length,iPAddress,sendPortNum);
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		sendPacket = new DatagramPacket(inputMsg,inputMsg.length,iPAddress,sendPortNum);
 
 		try {
 			sendReceiveSocket.send(sendPacket);
@@ -62,5 +58,9 @@ public class UDP{
 			e.printStackTrace();
 			System.exit(1);
 		}
+	}
+	
+	public void close() {
+		this.sendReceiveSocket.close();
 	}
 }

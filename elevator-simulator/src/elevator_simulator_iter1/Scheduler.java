@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import java.net.*;
 import java.time.Instant;
 import java.lang.Math;
-import java.net.InetAddress;
 
 
 enum Direction{
@@ -25,9 +24,7 @@ public class Scheduler implements Runnable{
 	private Buffer buffer;
 	private UDP uDP;
 
-	public Scheduler(Buffer buffer, int elevatorNo) {
-		// TO DELETE
-		// elevatorRequest = new ArrayDeque<ElevatorButton>() ; //These are the buttons pushed in the elevator.
+	public Scheduler(int elevatorNo) {
 		this.floorSubsystem = new FloorSubsystem();
 	
 		// Tell the subsystem to read in the values from the file
@@ -40,19 +37,14 @@ public class Scheduler implements Runnable{
 		// This will get updated every query period by scheduler
 		floorRequest = new ArrayList<FloorButton>(); 
 		
-		this.buffer = buffer;
-		
-		//
-		for(;elevatorNo > 0; elevatorNo--) {
-			Worker w = null;
-			try {
-				w = new Worker(750+elevatorNo,70+elevatorNo,InetAddress.getLocalHost(),buffer);
-			}catch(Exception e) {
-				System.out.println(e);
-			}
-			Thread t = new Thread(w, "Workers");
-			t.start();
+		try {
+			this.uDP = new UDP(570, 750, InetAddress.getLocalHost());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		this.buffer = new Buffer();
 	}
 
 	/**
@@ -78,10 +70,10 @@ public class Scheduler implements Runnable{
 		boolean isEmpty;
 		Direction dir;
 		
-		int[] getFromBuffer = buffer.get();
-		int elevatorNo = getFromBuffer[0];
-		int current = getFromBuffer[1];
-		int dest = getFromBuffer[2];
+		RecvData getFromBuffer = buffer.get();
+		int elevatorNo = getFromBuffer.data[0];
+		int current = getFromBuffer.data[1];
+		int dest = getFromBuffer.data[2];
 		
 		// Figure out state of the elevator
 		if (current - dest < 0){
@@ -149,15 +141,21 @@ public class Scheduler implements Runnable{
 		this.floorRequest.removeAll(remove);
 		
 		//Do UDP send to elevator
-		
+		UDP sendUdp = null;
 		try {
-			uDP = new UDP(elevatorNo+749,elevatorNo+60,InetAddress.getByName("100000"));
-		}catch(Exception e) {
-			System.out.println(e);
+			System.out.println("Trying to send packet to elevator");
+			sendUdp = new UDP(571, getFromBuffer.port, InetAddress.getLocalHost());
+			System.out.println("Sent packet to elevator");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		String returnMsg = "" + nextStop.getFloor() + nextStop.getDest();
-		uDP.sendByte(returnMsg.getBytes());
+		System.out.println("Trying to send packet to elevator");
+		sendUdp.sendByte(returnMsg.getBytes());
+		System.out.println("Sent packet to elevator");
+		sendUdp.close();
 	}
 
 	@Override
@@ -166,9 +164,20 @@ public class Scheduler implements Runnable{
 
 		querySubsystem();
 		while(true) {
+			System.out.println("Waiting for request from elevator");
+			buffer.add(uDP.receive());
+			System.out.println("Got request from elevator");
 			getNextFloor();
 		}
 	}
+	
+	/*
+	 * Byte 0 floorNo, Byte 1 dest
+	 */
+	private ElevatorButton decodeMsg(byte[] inputMsg) {
+		return new ElevatorButton(inputMsg[0],inputMsg[1]);
+	}
+	
 
 }
 
@@ -176,19 +185,25 @@ class Worker implements Runnable {
 	
 	private UDP uDP;
 	private Buffer buffer;
-	
+	 
 	//Note receive port and send port must be hard coded between elevator and scheduler
 		public Worker(int receivePortNum, int sendPortNum, InetAddress iPAddress, Buffer buffer) {
 			try {
-				UDP uDP = new UDP(receivePortNum,sendPortNum,InetAddress.getByName("100000"));
+				System.out.println("Worker binding on port" + receivePortNum);
+				UDP uDP = new UDP(receivePortNum, sendPortNum, InetAddress.getByName("127.0.0.1"));
+				System.out.println("Worker bound to port" + receivePortNum);
+				System.out.print(uDP);
+				System.out.println(" Line 184");
 			}catch(Exception e) {
-				System.out.println(e);
+				System.out.println("Err on 187 "+e);
 			}
 			this.buffer = buffer;
 		}
 		
 		public void run() {
 			while(true) {
+				System.out.print(uDP);
+				System.out.println(" Line 195");
 				buffer.add(uDP.receive());
 			}
 		}

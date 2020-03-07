@@ -39,7 +39,6 @@ class Elevator implements Runnable{
 	private Scheduler scheduler;
 	private State state;
 	private int elevatorNo;
-	private UDP uDP;
 	
 	public Elevator(Scheduler sched, int elevatorNo) {
 		this.buttonlist = new ArrayList<ElevatorButton> ();
@@ -47,11 +46,6 @@ class Elevator implements Runnable{
 		this.elevatorNo = elevatorNo;
 		this.motor = new Motor();
 		this.door = new Door();
-		try {
-			UDP uDP = new UDP(elevatorNo+749,elevatorNo+750,InetAddress.getByName("100000"));
-		}catch(Exception e) {
-			System.out.println(e);
-		}
 		this.scheduler = sched;
 	}
 	
@@ -81,12 +75,30 @@ class Elevator implements Runnable{
 	public void run(){
 		while(true){
 			//Elevator sends string with [elevatorNo,currFloor,nextStop]
-			String message = "" + elevatorNo + currFloor+ this.nextStop();
+			String message = "" + elevatorNo + currFloor + this.nextStop();
+			
+			// Do UDP in the same function so we dont hit the stupid nulling issues
+			UDP uDP = null;
+			try {
+				System.out.println("Elevator " + elevatorNo + " binding on port " + (elevatorNo+749));
+				uDP = new UDP(elevatorNo+749, 570,InetAddress.getByName("127.0.0.1"));
+				System.out.println("Elevator " + elevatorNo + " bound to port " + (elevatorNo+749));
+			}catch(Exception e) {
+				System.out.println("Error binding port " + e);
+			}
+
+			System.out.println(message);
+			System.out.println(message.getBytes());
+			System.out.println("Elevator requesting command");
 			uDP.sendByte(message.getBytes());
 			//Elevator receive response from scheduler
-			byte[] receiveMsg = uDP.receive();
+			System.out.println("Elevator waiting for response");
+			RecvData receivePacket = uDP.receive();
+			
+			System.out.println("Elevator got response");
+			uDP.close(); // So that the port is open next time
 			//decode response and create ElevatorButton to add to buttonlist
-			buttonlist.add(decodeMsg(receiveMsg));
+			buttonlist.add(decodeMsg(receivePacket.data));
 			System.out.println("Elevator " + this.elevatorNo + " is currently at: " + this.currFloor);
 
 			if(nextStop() == currFloor){
