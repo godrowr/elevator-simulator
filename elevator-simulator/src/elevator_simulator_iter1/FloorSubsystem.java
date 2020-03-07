@@ -18,7 +18,6 @@ enum FloorType {
 
 public class FloorSubsystem {
 	private static final int NUMFLOORS = 5;
-	private int you = 0;
 	private List<Floor> floors = new ArrayList<Floor>();
 	private ArrayList<FloorButton> buttons = new ArrayList<FloorButton>();
 
@@ -31,12 +30,11 @@ public class FloorSubsystem {
 			} else { //Any other floor
 				floors.add(new Floor(i, FloorType.NORMAL));
 			}
-						//System.out.println("Floor Added");
 		}
 	}
 
-	/*
-	 * 
+	/**
+	 * This method parses the input text file and creates button requests from it. 
 	 */
 	public void parseFile() {
 		List<String[]> morelines = new ArrayList<String[]>();
@@ -61,12 +59,13 @@ public class FloorSubsystem {
 	}
 
 	/**
-	* Send back the floor requests that have become available since we last checked
-	* Works based off of elapsed time
-	*/
-	public ArrayList<FloorButton> getRequest(Instant time){ //Why the for loop? Why can't you simply return buttons??
+	 * Send back the floor requests that have become available since we last checked
+	 * Works based off of elapsed time.
+	 * @param time
+	 * @return tempbuttons 
+	 */
+	public ArrayList<FloorButton> getRequest(Instant time){ 
 		ArrayList<FloorButton> tempButtons = new ArrayList<FloorButton>();
-		int counter = 0;
 		for(FloorButton button: buttons){
 			// if this param is greater positive value
 			// if this param is equal zero value
@@ -83,18 +82,39 @@ public class FloorSubsystem {
 		}
 		return tempButtons;
 	}
+	
+	/**
+	 * Send back the floor requests that have become available since we last checked 
+	 * @return buttons;
+	 */
+	public ArrayList<FloorButton> getRequest(){ 
+		return buttons; 
+	}
+	
+	/**
+	 * Returns the floors of the building. 
+	 * @return
+	 */
+	public List<Floor> getFloors(){
+		return floors;
+	}
 }
 
 
 class Floor {
 	private int floorNo;
-	private List<FloorButton> buttonList = new ArrayList<FloorButton>();
-
+	private FloorType type;
+	
 	public Floor(int floorNumber, FloorType type) {
 		this.floorNo = floorNumber;
+		this.type = type;
 	}
 	
 	public int getFloorNo() {
 		return floorNo;
+	}
+	
+	public FloorType getType() {
+		return type;
 	}
 }

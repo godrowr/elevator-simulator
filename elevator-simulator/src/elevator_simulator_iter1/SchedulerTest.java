@@ -28,8 +28,8 @@ class SchedulerTest {
 	static void BeforeAll()
 	{
 		eButton = new ElevatorButton(0,4);
-		fButton = new FloorButton("14:05:15.0", 4, "Up");
-		scheduler = new Scheduler();
+		fButton = new FloorButton("14:05:15.0", 2, 4);
+		scheduler = new Scheduler(2);
 		buttonList = new ArrayList<Button>();
 		
 		buttonList.add(fButton);
@@ -39,21 +39,39 @@ class SchedulerTest {
 	 * Tests inputButtonInfo method and getter/setter for elevator and floor buttons
 	 */
 	@Test
-	@DisplayName("Scheduler Test")
-	public void testInputButtonInfo() {
+	@DisplayName("Scheduler <> Test")
+	public void testDecode() {
 		
-		scheduler.inputButtonInfo(buttonList);
-		Queue<ElevatorButton> elevatorButtons = scheduler.getElevatorRequest();
-		for (ElevatorButton testButton : elevatorButtons) {
-			assertEquals(testButton.getFloorNo(),eButton.getFloorNo());
-			assertEquals(testButton.getCurfloor(),eButton.getCurfloor());
-		}
+//		scheduler.inputButtonInfo(buttonList);
+//		Queue<ElevatorButton> elevatorButtons = scheduler.getElevatorRequest();
+//		for (ElevatorButton testButton : elevatorButtons) {
+//			assertEquals(testButton.getFloorNo(),eButton.getFloorNo());
+//			assertEquals(testButton.getCurfloor(),eButton.getCurfloor());
+//		}
+//		
+//		Queue<FloorButton> floorButtons = scheduler.getFloorRequest();
+//		for (FloorButton testButton : floorButtons) {
+//			assertEquals(testButton.getTime(),fButton.getTime());
+//			assertEquals(testButton.getFloor(),fButton.getFloor());
+//			assertEquals(testButton.getDirection(),fButton.getDirection());
+//		}
+	}
+	
+	/*
+	 * Tests inputButtonInfo method and getter/setter for elevator and floor buttons
+	 */
+	@Test
+	@DisplayName("Scheduler <> Test")
+	public void testQuerySubsystem() {
 		
-		Queue<FloorButton> floorButtons = scheduler.getFloorRequest();
-		for (FloorButton testButton : floorButtons) {
-			assertEquals(testButton.getTime(),fButton.getTime());
-			assertEquals(testButton.getFloor(),fButton.getFloor());
-			assertEquals(testButton.getDirection(),fButton.getDirection());
-		}
+	}
+	
+	/*
+	 * Tests inputButtonInfo method and getter/setter for elevator and floor buttons
+	 */
+	@Test
+	@DisplayName("Scheduler <> Test")
+	public void testGetNextFloor() {
+		
 	}
 }
