@@ -1,3 +1,4 @@
+package elevator_simulator_iter1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class FloorSubsystem {
 	* Send back the floor requests that have become available since we last checked
 	* Works based off of elapsed time
 	*/
-	public ArrayList<FloorButton> getRequest(Instant time){
+	public ArrayList<FloorButton> getRequest(Instant time){ //Why the for loop? Why can't you simply return buttons??
 		ArrayList<FloorButton> tempButtons = new ArrayList<FloorButton>();
 		int counter = 0;
 		for(FloorButton button: buttons){

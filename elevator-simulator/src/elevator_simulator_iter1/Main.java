@@ -1,3 +1,5 @@
+package elevator_simulator_iter1;
+
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -5,19 +7,19 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 	
+	public static int debug = 1;
+	
 	public static void main(String[] args) {
 		Thread elevatorSystem, floorSystem, schedulerSystem;
 		Scheduler schedule;
 		ElevatorSubsystem elevatorsys;
 		FloorSubsystem floorsys;
-		/*
-		Scanner input = new Scanner(System.in);
-		System.out.println("Number of Elevators in the building?");
-		int elevatorNo = Integer.parseInt(input.nextLine());
 		
-		System.out.println("Number of Floors in the building?");
-		int floorNo = Integer.parseInt(input.nextLine());
-		*/
+		Scanner input = new Scanner(System.in);
+		System.out.println("Debug? (yes == 1 | 0 == no)");
+		debug = Integer.parseInt(input.nextLine());
+		
+		
 		schedule = new Scheduler(2);
 		elevatorsys = new ElevatorSubsystem(schedule, 2);
 		floorsys = new FloorSubsystem();

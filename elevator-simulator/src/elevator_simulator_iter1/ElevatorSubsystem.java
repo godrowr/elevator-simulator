@@ -1,9 +1,12 @@
+package elevator_simulator_iter1;
+
 
 import java.lang.Thread;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 import java.time.Clock;
 import java.time.Instant;
 
@@ -75,30 +78,38 @@ class Elevator implements Runnable{
 	public void run(){
 		while(true){
 			//Elevator sends string with [elevatorNo,currFloor,nextStop]
-			String message = "" + elevatorNo + currFloor + this.nextStop();
+			String message = "" + elevatorNo + currFloor + this.nextStop(); //Dont use string! 
 			
 			// Do UDP in the same function so we dont hit the stupid nulling issues
 			UDP uDP = null;
 			try {
-				System.out.println("Elevator " + elevatorNo + " binding on port " + (elevatorNo+749));
+				if(Main.debug == 1) System.out.println("Elevator " + elevatorNo + " binding on port " + (elevatorNo+749));
 				uDP = new UDP(elevatorNo+749, 570,InetAddress.getByName("127.0.0.1"));
-				System.out.println("Elevator " + elevatorNo + " bound to port " + (elevatorNo+749));
+				if(Main.debug == 1) System.out.println("Elevator " + elevatorNo + " bound to port " + (elevatorNo+749));
 			}catch(Exception e) {
 				System.out.println("Error binding port " + e);
 			}
 
-			System.out.println(message);
-			System.out.println(message.getBytes());
-			System.out.println("Elevator requesting command");
-			uDP.sendByte(message.getBytes());
+			//System.out.println(message); //Testing purposes
+			//System.out.println(message.getBytes()); //Testing purposes
+			if(Main.debug == 1) System.out.println("Elevator requesting command");
+			
+			//byte m = elevatorNo.byteValue(); 
+			byte[] b = message.getBytes();
+			//String test = new String(b);
+			//System.out.printf(test);
+			
+			uDP.sendByte(b);
 			//Elevator receive response from scheduler
-			System.out.println("Elevator waiting for response");
+			if(Main.debug == 1) System.out.println("Elevator waiting for response");
 			RecvData receivePacket = uDP.receive();
 			
-			System.out.println("Elevator got response");
+			if(Main.debug == 1) System.out.println("Elevator got response");
 			uDP.close(); // So that the port is open next time
 			//decode response and create ElevatorButton to add to buttonlist
-			buttonlist.add(decodeMsg(receivePacket.data));
+			buttonlist.add(decodeMsg(receivePacket.data)); //This is also an issue
+			
+			
 			System.out.println("Elevator " + this.elevatorNo + " is currently at: " + this.currFloor);
 
 			if(nextStop() == currFloor){
@@ -114,13 +125,13 @@ class Elevator implements Runnable{
 				this.update();
 			}
 			System.out.println("Elevator " + this.elevatorNo + "'s doors open at floor: "+ this.nextStop());
-			System.out.println("Elevator " + this.elevatorNo + "'s doors closed");
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			System.out.println("Elevator " + this.elevatorNo + "'s doors closed");
 		}
 		
 	}
@@ -150,10 +161,19 @@ class Elevator implements Runnable{
 	}
 	
 	/*
-	 * Byte 0 floorNo, Byte 1 dest
+	 * This converts bytes back into its string format then converted into ints for easier use. 
 	 */
 	private ElevatorButton decodeMsg(byte[] inputMsg) {
-		return new ElevatorButton(inputMsg[0],inputMsg[1]);
+		byte b = inputMsg[0];//get floor
+		byte b1 = inputMsg[1];//get dest
+		byte[] ba = new byte[1];
+		byte[] ba1 = new byte[1];
+		ba[0] = b;
+		ba1[0] = b1;
+		String s = new String(ba);
+		String s1 = new String(ba1);
+		
+		return new ElevatorButton(Integer.parseInt(s),Integer.parseInt(s1));
 	}
 	
 }

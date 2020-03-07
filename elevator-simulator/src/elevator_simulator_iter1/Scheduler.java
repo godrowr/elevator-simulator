@@ -1,3 +1,5 @@
+package elevator_simulator_iter1;
+
 
 import java.util.*;
 
@@ -70,10 +72,16 @@ public class Scheduler implements Runnable{
 		boolean isEmpty;
 		Direction dir;
 		
+		//FIX THIS 
 		RecvData getFromBuffer = buffer.get();
-		int elevatorNo = getFromBuffer.data[0];
-		int current = getFromBuffer.data[1];
-		int dest = getFromBuffer.data[2];
+		
+		int[] val = decodeMsg(getFromBuffer);
+
+		int elevatorNo = val[0];
+		int current = val[1];
+		int dest = val[2];
+		//FIX THIS
+		
 		
 		// Figure out state of the elevator
 		if (current - dest < 0){
@@ -143,18 +151,18 @@ public class Scheduler implements Runnable{
 		//Do UDP send to elevator
 		UDP sendUdp = null;
 		try {
-			System.out.println("Trying to send packet to elevator");
+			if(Main.debug == 1)System.out.println("Trying to send packet to elevator");
 			sendUdp = new UDP(571, getFromBuffer.port, InetAddress.getLocalHost());
-			System.out.println("Sent packet to elevator");
+			if(Main.debug == 1)System.out.println("Sent packet to elevator");
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		String returnMsg = "" + nextStop.getFloor() + nextStop.getDest();
-		System.out.println("Trying to send packet to elevator");
-		sendUdp.sendByte(returnMsg.getBytes());
-		System.out.println("Sent packet to elevator");
+		String returnMsg = "" + nextStop.getFloor() + nextStop.getDest(); // this is the string message that is being sent!
+		if(Main.debug == 1)System.out.println("Trying to send packet to elevator");
+		sendUdp.sendByte(returnMsg.getBytes()); //When it sends the elevator it doesn't parse the floor correctly!
+		if(Main.debug == 1)System.out.println("Sent packet to elevator");
 		sendUdp.close();
 	}
 
@@ -164,9 +172,9 @@ public class Scheduler implements Runnable{
 
 		querySubsystem();
 		while(true) {
-			System.out.println("Waiting for request from elevator");
+			if(Main.debug == 1)System.out.println("Waiting for request from elevator");
 			buffer.add(uDP.receive());
-			System.out.println("Got request from elevator");
+			if(Main.debug == 1)System.out.println("Got request from elevator");
 			getNextFloor();
 		}
 	}
@@ -174,8 +182,27 @@ public class Scheduler implements Runnable{
 	/*
 	 * Byte 0 floorNo, Byte 1 dest
 	 */
-	private ElevatorButton decodeMsg(byte[] inputMsg) {
-		return new ElevatorButton(inputMsg[0],inputMsg[1]);
+	private int[] decodeMsg(RecvData getFromBuffer) {
+		byte b = getFromBuffer.data[0];
+		byte b1 = getFromBuffer.data[1];
+		byte b2 = getFromBuffer.data[1];
+		
+		byte[] ba = new byte[1];
+		ba[0] = b;
+		byte[] ba1 = new byte[1];
+		ba1[0] = b1;
+		byte[] ba2 = new byte[1];
+		ba2[0] = b2;
+ 
+		String s = new String(ba);
+		String s1 = new String(ba1);
+		String s2 = new String(ba2);
+		
+		int[] r = new int[3];
+		r[0]= Integer.parseInt(s);
+		r[1]= Integer.parseInt(s1);
+		r[2]= Integer.parseInt(s2);
+		return r;
 	}
 	
 

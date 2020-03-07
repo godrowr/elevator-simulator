@@ -1,3 +1,5 @@
+package elevator_simulator_iter1;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -49,7 +51,9 @@ public class UDP{
 		return recv;
 	}
 	
-	public void sendByte(byte[] inputMsg){
+	public void sendByte(byte[] inputMsg){ //This appears to be the root of the issue. 
+		
+		
 		sendPacket = new DatagramPacket(inputMsg,inputMsg.length,iPAddress,sendPortNum);
 
 		try {

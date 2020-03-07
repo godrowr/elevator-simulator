@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test;
 
 class Floor_subsystemTest {
 	
-	private static Floor_subsystem floorSystem;
+	private static FloorSubsystem floorSystem;
 	private static Scheduler scheduler;
 	
 	@BeforeAll
 	static void BeforeAll() {
 		scheduler = new Scheduler();
-		floorSystem = new Floor_subsystem(scheduler,5);
+		floorSystem = new FloorSubsystem(scheduler,5);
 	}
 
 	@Test
