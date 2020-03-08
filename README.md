@@ -12,11 +12,11 @@ SYSC 3303 Elevator control system and simulator team project.
 
 | Contributor  | Responsibility |
 | ------------- | ------------- |
-| Ryan F.  | Elevator, Elevator Info, Misc. |
+| Ryan F.  | Elevator, Misc. |
 | Kaelan  | Sequence, UML, Misc. |
 | Ryan G.  | Fixes, Floor, JUnit, Docs, Readme, Misc.|
 | Xander | UDP, RecvData, Motor, Door, Misc.|
-| Andrew | Scheduler, Eelvator Info, Buffer, Misc. |
+| Andrew | Scheduler, Buffer, Misc. |
 
 ### Set up instructions
 1. Unzip file into folder
@@ -52,7 +52,5 @@ Includes the currentUML diagram of all the classes within our submission.
 This file holds an array of RecvData objects to be easily iterated through and acquired. 
 #### 15. RecvData
 This file holds the data structure that is passed from one subsystem to another
-#### 16. ElevatorInfo
-This file contains information on an Elevator that can be retreived
-#### 17. UDP
+#### 16. UDP
 This file creates sockets for the system that passes packet data to subsystems. 
