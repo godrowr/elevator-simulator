@@ -14,7 +14,7 @@ SYSC 3303 Elevator control system and simulator team project.
 | ------------- | ------------- |
 | Ryan F.  | Elevator, Elevator Info, Misc. |
 | Kaelan  | Sequence, UML, Misc. |
-| Ryan G.  | Fixes, Floor, JUnit, Javadocs , Misc.|
+| Ryan G.  | Fixes, Floor, JUnit, Docs, Readme, Misc.|
 | Xander | UDP, RecvData, Motor, Door, Misc.|
 | Andrew | Scheduler, Eelvator Info, Buffer, Misc. |
 
@@ -46,4 +46,9 @@ This file consists of the format which is indicated in the project requirements.
 Includes a sample sequence diagram that illustates an abstract model of our submission. 
 #### 12. UML_Diagram
 Includes the currentUML diagram of all the classes within our submission. 
+#### 13. Buffer
+
+#### 14. RecvData
+
+#### 15. Buffer
 
