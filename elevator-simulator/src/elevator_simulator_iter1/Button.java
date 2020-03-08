@@ -1,100 +1,85 @@
 package elevator_simulator_iter1;
 
+
+import java.time.Instant;
+
 /**
- * 
- * @author Ryan Gaudreault
- *
+ * The superclass of button. Every button has a lamp, a destination to go to, 
+ * a source to come from, and a boolean of if its been pushed or not. 
  */
-public class Button {
-	private boolean push; 
+class Button {
+	private boolean pushed;
+	protected Lamp lamp; 
+	protected int floorNo;
+	protected int dest;
+
+	public Button(int floorNumber, int dest){
+		this.floorNo = floorNumber;
+		this.pushed = false;
+		this.dest = dest;
+
+	}
 	
 	public void pushButton() {
-		push = true;
-		//do something;
-		push = false;
+		if (!this.lamp.isOn()) {this.lamp.toggle();}
 	}
-	
-	public void turnOnLamp() {
-		
-	}
-
 }
 
 /**
- * This class exteneds Button but is responsible for interfacing with user requests for an elevator on a paticular floor. 
- * @author Ryan Gaudreault
- *
+ * The class of button that is on floors, which requires a time object to prioritize when
+ * buttons are pressed since the elevators are both first come first serve but also should decide if they
+ * can pick up a passenger along the way. 
  */
 class FloorButton extends Button {
-	private String time;
-	private int floor;
-	private String direction;
-	private FloorLamp lamp;
+	private Instant time;
 	
-	public FloorButton(String time, int floor, String direction) {
-		this.setTime(time);
-		this.setFloor(floor);
-		this.setDirection(direction); 
+	/**
+	 * Builds a floor button. 
+	 * @param time Time the button was pressed. 
+	 * @param floor The floor it was pressed on.
+	 * @param dest The destination of the passenger to descern if the passenger is going up or down.
+	 */
+	public FloorButton(String time, int floor, int dest) {
+		super(floor, dest);
+		//if(Main.debug == 1)System.out.println(time);
+		this.time = java.sql.Timestamp.valueOf(time).toInstant();
+		if(Main.debug == 1)System.out.println(this.time);
+		this.lamp = new FloorLamp();
 	}
 
-	public String getTime() {
+	public Instant getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
-	}
-
 	public int getFloor() {
-		return floor;
+		return floorNo;
 	}
 
-	public void setFloor(int floor) {
-		this.floor = floor;
-	}
-
-	public String getDirection() {
-		return direction;
-	}
-
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
-
-	public FloorLamp getLamp() {
-		return lamp;
-	}
-
-	public void setLamp(FloorLamp lamp) {
-		this.lamp = lamp;
+	public int getDest() {
+		return dest;
 	}
 	
 }
 
-
+/**
+ * The class of button that is in elevators, which only requires a destination and a source. 
+ */
 class ElevatorButton extends Button {
-	private ElevatorLamp lamp;
-	private int floorNo;
-	private int curfloor;
-	
-	public ElevatorButton(int curfloor, int floorNo) {
-		this.setFloorNo(floorNo);
+	/**
+	 * Builds a Elevator Button. 
+	 * @param floorNo The floor it was pressed on.
+	 * @param dest The floor the passenger wishs to travel to. 
+	 */
+	public ElevatorButton(int floorNo, int dest) {
+		super(floorNo, dest);
+		this.lamp = new ElevatorLamp();
 	}
 
-	public int getCurfloor() {
-		return curfloor;
-	}
-
-	public void setCurfloor(int curfloor) {
-		this.curfloor = curfloor;
-	}
-
-	public int getFloorNo() {
+	public int getFloor() {
 		return floorNo;
 	}
-
-	public void setFloorNo(int floorNo) {
-		this.floorNo = floorNo;
-	}
 	
+	public int getDest() {
+		return dest;
+	}
 }

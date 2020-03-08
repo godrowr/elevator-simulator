@@ -1,6 +1,3 @@
-/**
- * 
- */
 package elevator_simulator_iter1;
 
 import java.util.*;
@@ -9,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
- * @author DREW
- *
+ * The SchedulerTest class tests the functions of Scheduler such as Decode, QuerySubsystem, and Getnext floor. 
+ * @author Ryan Godrow
  */
 class SchedulerTest {
 	
@@ -18,41 +15,34 @@ class SchedulerTest {
 	private static FloorButton fButton;
 	private static Scheduler scheduler;
 	private static List<Button> buttonList;
+	private static RecvData recv;
 
-	public SchedulerTest() {
-	
-	}
+	public SchedulerTest() {}
 	
 	@BeforeAll
 	static void BeforeAll()
 	{
-		eButton = new ElevatorButton(0,4);
-		fButton = new FloorButton("14:05:15.0", 4, "Up");
-		scheduler = new Scheduler();
-		buttonList = new ArrayList<Button>();
-		
-		buttonList.add(fButton);
-		buttonList.add(eButton);
+		scheduler = new Scheduler(2);
 	}
+	
 	/*
-	 * Tests inputButtonInfo method and getter/setter for elevator and floor buttons
+	 * 
 	 */
 	@Test
-	@DisplayName("Scheduler Test")
-	public void testInputButtonInfo() {
+	@DisplayName("Scheduler <> Test")
+	public void testDecode() {
 		
-		scheduler.inputButtonInfo(buttonList);
-		Queue<ElevatorButton> elevatorButtons = scheduler.getElevatorRequest();
-		for (ElevatorButton testButton : elevatorButtons) {
-			assertEquals(testButton.getFloorNo(),eButton.getFloorNo());
-			assertEquals(testButton.getCurfloor(),eButton.getCurfloor());
-		}
+		String message = "" + 1 + 2 + 2;
+
+		recv = new RecvData();
+		recv.data = message.getBytes();
+		recv.port = 4;
 		
-		Queue<FloorButton> floorButtons = scheduler.getFloorRequest();
-		for (FloorButton testButton : floorButtons) {
-			assertEquals(testButton.getTime(),fButton.getTime());
-			assertEquals(testButton.getFloor(),fButton.getFloor());
-			assertEquals(testButton.getDirection(),fButton.getDirection());
-		}
+		int[] val = scheduler.decodeMsg(recv);
+		
+		assertEquals(val[0],1);
+		assertEquals(val[1],2);
+		assertEquals(val[2],2);
 	}
+
 }
