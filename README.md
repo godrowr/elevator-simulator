@@ -46,7 +46,7 @@ This file includes the lamp classes of the floor and elevator.
 This file when run starts the Elevator_subsystem, Floor_subsystem and Scheduler threads and showcases the information that is sent between the two. 
 #### 11. inputFile
 This file consists of the format which is indicated in the project requirements. It includes the date, floor number, direction and destination of each request. 
-#### 12. Sequence_Diagram
+#### 12. i3SequenceDiagram.pdf
 Includes a sample sequence diagram that illustates an abstract model of our submission. 
 #### 13. classDiagramI3.pdf
 Includes the current UML diagram of all the classes within our submission. 
