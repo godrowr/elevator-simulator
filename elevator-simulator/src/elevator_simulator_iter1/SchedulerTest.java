@@ -38,7 +38,10 @@ class SchedulerTest {
 		
 		String message = "" + 1 + 2 + 2;
 
-		recv = new RecvData(message.getBytes(), 4);
+		recv = new RecvData();
+		recv.data = message.getBytes();
+		recv.port = 4;
+		
 		int[] val = scheduler.decodeMsg(recv);
 		
 		assertEquals(val[0],1);
