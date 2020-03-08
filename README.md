@@ -48,8 +48,8 @@ This file when run starts the Elevator_subsystem, Floor_subsystem and Scheduler 
 This file consists of the format which is indicated in the project requirements. It includes the date, floor number, direction and destination of each request. 
 #### 12. Sequence_Diagram
 Includes a sample sequence diagram that illustates an abstract model of our submission. 
-#### 13. UML_Diagram
-Includes the currentUML diagram of all the classes within our submission. 
+#### 13. classDiagramI3.pdf
+Includes the current UML diagram of all the classes within our submission. 
 #### 14. Buffer
 This file holds an array of RecvData objects to be easily iterated through and acquired. 
 #### 15. RecvData
