@@ -12,11 +12,11 @@ SYSC 3303 Elevator control system and simulator team project.
 
 | Contributor  | Responsibility |
 | ------------- | ------------- |
-| Ryan F.  | Main Elevator  |
+| Ryan F.  | Elevator  |
 | Kaelan  | Sequence, UML |
-| Ryan G.  | Main Floor, Basic Elevator & Scheduler, README |
-| Xander | Motor, Door |
-| Andrew | Main Scheduler, Testing |
+| Ryan G.  | Fixes, Floor, JUnit, Javadocs |
+| Xander | UDP, RecvData, Motor, Door |
+| Andrew | Scheduler, Eelvator Info, Buffer |
 
 ### Set up instructions
 1. Unzip file into folder
