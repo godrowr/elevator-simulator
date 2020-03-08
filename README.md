@@ -20,6 +20,8 @@ SYSC 3303 Elevator control system and simulator team project.
 
 ### Set up instructions
 1. Unzip file into folder
+2. Run Main()
+3. If you want more verbose outputs type 1, otherwise type 0 when prompted by debug. 
 
 ### Files
 #### 1. FloorSubsystem
