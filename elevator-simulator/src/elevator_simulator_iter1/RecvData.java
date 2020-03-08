@@ -6,4 +6,9 @@ package elevator_simulator_iter1;
 public class RecvData {
 	public int port;
 	public byte[] data;
+	
+	RecvData(byte[] data, int port){
+		this.data = data;
+		this.port = port; 
+	}
 }

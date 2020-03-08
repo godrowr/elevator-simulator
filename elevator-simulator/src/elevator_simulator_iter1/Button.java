@@ -41,8 +41,9 @@ class FloorButton extends Button {
 	 */
 	public FloorButton(String time, int floor, int dest) {
 		super(floor, dest);
-		System.out.println(time);
+		//if(Main.debug == 1)System.out.println(time);
 		this.time = java.sql.Timestamp.valueOf(time).toInstant();
+		if(Main.debug == 1)System.out.println(this.time);
 		this.lamp = new FloorLamp();
 	}
 

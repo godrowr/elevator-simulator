@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * 
- *
+ * The Main class 
+ * @author Ryan Godrow
  */
 public class Main {
 	
@@ -35,9 +35,6 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//schedulerSystem.interrupt();
-		//elevatorSystem.interrupt();
-		//floorSystem.interrupt();
 		
 	}
 }

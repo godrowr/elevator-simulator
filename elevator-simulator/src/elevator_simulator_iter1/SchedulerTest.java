@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
- * @author DREW
- *
+ * The vSchedulerTest class tests the functions of Scheduler such as Decode, QuerySubsystem, and Getnext floor. 
+ * @author Ryan Godrow
  */
 class SchedulerTest {
 	
@@ -19,64 +19,31 @@ class SchedulerTest {
 	private static FloorButton fButton;
 	private static Scheduler scheduler;
 	private static List<Button> buttonList;
+	private static RecvData recv;
 
-	public SchedulerTest() {
-	
-	}
+	public SchedulerTest() {}
 	
 	@BeforeAll
 	static void BeforeAll()
 	{
-		eButton = new ElevatorButton(0,4);
-		fButton = new FloorButton("14:05:15.0", 2, 4);
 		scheduler = new Scheduler(2);
-		buttonList = new ArrayList<Button>();
-		
-		buttonList.add(fButton);
-		buttonList.add(eButton);
 	}
+	
 	/*
-	 * Tests inputButtonInfo method and getter/setter for elevator and floor buttons
+	 * 
 	 */
 	@Test
 	@DisplayName("Scheduler <> Test")
 	public void testDecode() {
 		
-		Buffer buffer = new Buffer();
-		byte[] data = new byte[3];
-		RecvData recv = data;
+		String message = "" + 1 + 2 + 2;
+
+		recv = new RecvData(message.getBytes(), 4);
+		int[] val = scheduler.decodeMsg(recv);
 		
-		scheduler.decodeMsg();
-//		scheduler.inputButtonInfo(buttonList);
-//		Queue<ElevatorButton> elevatorButtons = scheduler.getElevatorRequest();
-//		for (ElevatorButton testButton : elevatorButtons) {
-//			assertEquals(testButton.getFloorNo(),eButton.getFloorNo());
-//			assertEquals(testButton.getCurfloor(),eButton.getCurfloor());
-//		}
-//		
-//		Queue<FloorButton> floorButtons = scheduler.getFloorRequest();
-//		for (FloorButton testButton : floorButtons) {
-//			assertEquals(testButton.getTime(),fButton.getTime());
-//			assertEquals(testButton.getFloor(),fButton.getFloor());
-//			assertEquals(testButton.getDirection(),fButton.getDirection());
-//		}
+		assertEquals(val[0],1);
+		assertEquals(val[1],2);
+		assertEquals(val[2],2);
 	}
-	
-	/*
-	 * Tests inputButtonInfo method and getter/setter for elevator and floor buttons
-	 */
-	@Test
-	@DisplayName("Scheduler <> Test")
-	public void testQuerySubsystem() {
-		
-	}
-	
-	/*
-	 * Tests inputButtonInfo method and getter/setter for elevator and floor buttons
-	 */
-	@Test
-	@DisplayName("Scheduler <> Test")
-	public void testGetNextFloor() {
-		
-	}
+
 }

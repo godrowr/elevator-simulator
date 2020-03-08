@@ -15,12 +15,19 @@ enum FloorType {
 	GROUND
 }
 
-
+/**
+ * The Floor Subsystem class is responsible for handling all the requests in the building by parsing an inputText file
+ * that contains the requests. It also builds the floors for the building. 
+ * @author Ryan Godrow
+ */
 public class FloorSubsystem {
 	private static final int NUMFLOORS = 5;
 	private List<Floor> floors = new ArrayList<Floor>();
 	private ArrayList<FloorButton> buttons = new ArrayList<FloorButton>();
 
+	/**
+	 * The constructor for the floor subsystem creates the floors and assigns it a type. 
+	 */
 	public FloorSubsystem() {
 		for(int i = 1; i <= NUMFLOORS; i++) {
 			if (i == NUMFLOORS) { //Penthouse floor
@@ -66,21 +73,7 @@ public class FloorSubsystem {
 	 */
 	public ArrayList<FloorButton> getRequest(Instant time){ 
 		ArrayList<FloorButton> tempButtons = new ArrayList<FloorButton>();
-		for(FloorButton button: buttons){
-			// if this param is greater positive value
-			// if this param is equal zero value
-			// if this param is lesser negative value
-			// CHANGED THIS BACK TO if(time.compareTo(button.getTime()) >= 0){ 
-			tempButtons.add(button);
-			//	this.buttons.remove(counter);
-				// We dont increment counter when removing from array because
-				// indices change
-			//} else {
-				// Increment if we didnt
-			//	counter+=1;
-			//}
-		}
-		return tempButtons;
+		return buttons;
 	}
 	
 	/**

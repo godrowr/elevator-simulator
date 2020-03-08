@@ -134,7 +134,8 @@ public class Scheduler implements Runnable{
 		}
 
 		ElevatorButton nextStop;
-		// Create the thing that we pass back to the elevator
+		
+		// Creates a RecvData Object that we pass back to the elevator
 		if (nextClosest == null && dir == Direction.STOP) {
 			nextStop = new ElevatorButton(1, 1);
 		} else if (nextClosest == null && dir != Direction.STOP) {
@@ -146,14 +147,13 @@ public class Scheduler implements Runnable{
 		remove.add(nextClosest);
 		this.floorRequest.removeAll(remove);
 		
-		//Do UDP send to elevator
+		//Use UDP socket to send to elevator
 		UDP sendUdp = null;
 		try {
 			if(Main.debug == 1)System.out.println("Trying to send packet to elevator");
 			sendUdp = new UDP(571, getFromBuffer.port, InetAddress.getLocalHost());
 			if(Main.debug == 1)System.out.println("Sent packet to elevator");
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -182,7 +182,7 @@ public class Scheduler implements Runnable{
 	 * @param getFromBuffer The object that carries data from one system to another. 
 	 * @return r The values of floorNo and destination in integers. 
 	 */
-	private int[] decodeMsg(RecvData getFromBuffer) {
+	public int[] decodeMsg(RecvData getFromBuffer) {
 		byte b = getFromBuffer.data[0];
 		byte b1 = getFromBuffer.data[1];
 		byte b2 = getFromBuffer.data[1];
