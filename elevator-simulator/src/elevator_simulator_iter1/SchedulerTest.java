@@ -1,16 +1,12 @@
 package elevator_simulator_iter1;
 
-/**
- * 
- */
-
 import java.util.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
- * The vSchedulerTest class tests the functions of Scheduler such as Decode, QuerySubsystem, and Getnext floor. 
+ * The SchedulerTest class tests the functions of Scheduler such as Decode, QuerySubsystem, and Getnext floor. 
  * @author Ryan Godrow
  */
 class SchedulerTest {

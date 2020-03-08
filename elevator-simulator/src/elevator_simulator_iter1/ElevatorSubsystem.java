@@ -33,6 +33,13 @@ public class ElevatorSubsystem  {
 			threads.add(t);
 		}
 	}
+	
+	/*
+	 * Returns an elevator in the arraylist of elevators, used for testing. 
+	 */
+	public Elevator getElevator(int i) {
+		return elevators.get(i);
+	}
 
 }
 
@@ -70,7 +77,7 @@ class Elevator implements Runnable{
 	 * returns the floor number of the closest stop.
 	 * @return floorNo returns the floor number of the closest stop. 
 	 */
-	private int nextStop(){
+	public int nextStop(){
 		// Figure out next person in line
 		ElevatorButton nextClosest = null;
 		for (ElevatorButton req: buttonlist) {
@@ -112,16 +119,9 @@ class Elevator implements Runnable{
 				System.out.println("Error binding port " + e);
 			}
 
-			//System.out.println(message); //Testing purposes
-			//System.out.println(message.getBytes()); //Testing purposes
 			if(Main.debug == 1) System.out.println("Elevator requesting command");
+			uDP.sendByte(message.getBytes());
 			
-			//byte m = elevatorNo.byteValue(); 
-			byte[] b = message.getBytes();
-			//String test = new String(b);
-			//System.out.printf(test);
-			
-			uDP.sendByte(b);
 			//Elevator receive response from scheduler
 			if(Main.debug == 1) System.out.println("Elevator waiting for response");
 			RecvData receivePacket = uDP.receive();
@@ -129,7 +129,7 @@ class Elevator implements Runnable{
 			if(Main.debug == 1) System.out.println("Elevator got response");
 			uDP.close(); // So that the port is open next time
 			//decode response and create ElevatorButton to add to buttonlist
-			buttonlist.add(decodeMsg(receivePacket.data)); //This is also an issue
+			addButtonList(receivePacket); //This is also an issue
 			
 			
 			System.out.println("Elevator " + this.elevatorNo + " is currently at: " + this.currFloor);
@@ -162,7 +162,7 @@ class Elevator implements Runnable{
 	 * Update our list of destinations to remove any that are at 
 	 * the current floor
 	 */
-	private void update(){
+	public void update(){
 		// Figure out next person in line
 		ArrayList<ElevatorButton> remove = new ArrayList<ElevatorButton>();
 		for (ElevatorButton req: buttonlist) {
@@ -178,7 +178,7 @@ class Elevator implements Runnable{
 	 * This method sets the current floor of the elevator. 
 	 * @param floorNumber The floor the elevator moved to and is now at. 
 	 */
-	private void gotoFloor(int floorNumber) {
+	public void gotoFloor(int floorNumber) {
 		// Make sure to close the doors
 		int num_floors = Math.abs(this.currFloor - floorNumber);
 		if (this.door.isOpen()) {this.door.toggle();}
@@ -192,7 +192,7 @@ class Elevator implements Runnable{
 	 * @param inputMsg The byte array data received. 
 	 * @return ElevatorButton a button pressed in an elevator to drop a patron off. 
 	 */
-	private ElevatorButton decodeMsg(byte[] inputMsg) {
+	public ElevatorButton decodeMsg(byte[] inputMsg) {
 		byte b = inputMsg[0];//get floor
 		byte b1 = inputMsg[1];//get dest
 		byte[] ba = new byte[1];
@@ -203,6 +203,14 @@ class Elevator implements Runnable{
 		String s1 = new String(ba1);
 		
 		return new ElevatorButton(Integer.parseInt(s),Integer.parseInt(s1));
+	}
+	
+	/**
+	 * Simple setter for buttonlist. 
+	 * @param receivePacket
+	 */
+	public void addButtonList(RecvData receivePacket) {
+		buttonlist.add(decodeMsg(receivePacket.data));
 	}
 	
 }
