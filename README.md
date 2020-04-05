@@ -21,6 +21,7 @@ SYSC 3303 Elevator control system and simulator team project.
 1. Unzip file into folder
 2. Run Main()
 3. If you want more verbose outputs type 1, otherwise type 0 when prompted by debug. 
+4. Run the test cases seperately, there are 4 test files. You may need to set up JUnit 5 in the project setup for proper execution. 
 
 ### Files
 #### 1. FloorSubsystem
