@@ -1,4 +1,6 @@
 
+import static org.junit.Assert.*;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -7,13 +9,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * 
+ * This test file tests the recieve and send functions of the UDP class. 
  * @author Ryan Godrow
  */
 class UDPTest {
 	static UDP udp;
 	
-	@org.junit.jupiter.api.BeforeAll
+	@BeforeAll
 	static void BeforeAll() {
 		try {
 			 udp = new UDP(5701, 5701, InetAddress.getLocalHost());
@@ -24,13 +26,13 @@ class UDPTest {
 	}
 
 	@Test
-	@DisplayName("UDP Receive Test")
-	void receivetest() {
+	@DisplayName("UDP Receive & Send Test")
+	void receiveSendTest() {
 		udp.sendByte(("Hello").getBytes());
 		RecvData receivePacket = udp.receive();
 		byte[] inputMsg = receivePacket.data;
-		String s = new String(inputMsg);
-		System.out.print(s);
+		String s = new String(inputMsg).trim();
+		assertTrue(s.equals("Hello"));
 	}
 
 }

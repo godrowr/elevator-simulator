@@ -70,7 +70,6 @@ public class FloorSubsystem {
 	 * @return tempbuttons 
 	 */
 	public ArrayList<FloorButton> getRequest(Instant time){ 
-		ArrayList<FloorButton> tempButtons = new ArrayList<FloorButton>();
 		return buttons;
 	}
 	

@@ -52,13 +52,14 @@ public class Scheduler implements Runnable{
 	/**
 	 * Query the floor subsystem for the new list of floors
 	 */
-	private void querySubsystem(){
+	public ArrayList<FloorButton> querySubsystem(){
 		//Instant elapsed = Instant.now().minus(this.start);
 		ArrayList<FloorButton> newReqs = this.floorSubsystem.getRequest(Instant.now());
 		// Add all the new requests to our list of requests
 		for(FloorButton req: newReqs){
 			floorRequest.add(req);
 		}
+		return newReqs;
 	}
 
 
