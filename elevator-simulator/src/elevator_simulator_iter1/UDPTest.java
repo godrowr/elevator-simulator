@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class UDPTest {
 	static UDP udp;
 	
-	@BeforeAll
+	@org.junit.jupiter.api.BeforeAll
 	static void BeforeAll() {
 		try {
 			 udp = new UDP(5701, 5701, InetAddress.getLocalHost());
