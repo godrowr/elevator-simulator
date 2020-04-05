@@ -59,6 +59,7 @@ class Elevator implements Runnable{
 	private Scheduler scheduler;
 	private State state;
 	private int elevatorNo;
+	private boolean cont = true;
 	
 	public Elevator(Scheduler sched, int elevatorNo) {
 		this.buttonlist = new ArrayList<ElevatorButton> ();
@@ -102,7 +103,7 @@ class Elevator implements Runnable{
 	 */
 	@Override
 	public void run(){
-		while(true){
+		while(cont){
 			//Elevator sends string with [elevatorNo,currFloor,nextStop]
 			String message = "" + elevatorNo + currFloor + this.nextStop(); //Dont use string! 
 			
@@ -130,7 +131,9 @@ class Elevator implements Runnable{
 			
 			
 			System.out.println("Elevator " + this.elevatorNo + " is currently at: " + this.currFloor);
-
+			
+			if(this.nextStop() == this.currFloor) cont = false;
+		
 			if(nextStop() == currFloor){
 				// Wait so that we dont overload the system
 				try {
@@ -143,6 +146,7 @@ class Elevator implements Runnable{
 				gotoFloor(this.nextStop());
 				this.update();
 			}
+			
 			System.out.println("Elevator " + this.elevatorNo + "'s doors open at floor: "+ this.nextStop());
 			try {
 				Thread.sleep(2000);
@@ -175,12 +179,13 @@ class Elevator implements Runnable{
 	 * This method sets the current floor of the elevator. 
 	 * @param floorNumber The floor the elevator moved to and is now at. 
 	 */
-	public void gotoFloor(int floorNumber) {
+	public int gotoFloor(int floorNumber) {
 		// Make sure to close the doors
 		int num_floors = Math.abs(this.currFloor - floorNumber);
 		if (this.door.isOpen()) {this.door.toggle();}
 		if (this.motor.isTravelling()) {this.motor.travelNum(num_floors);}
 		this.currFloor = floorNumber;
+		return floorNumber;
 	}
 	
 	/**
@@ -208,6 +213,14 @@ class Elevator implements Runnable{
 	 */
 	public void addButtonList(RecvData receivePacket) {
 		buttonlist.add(decodeMsg(receivePacket.data));
+	}
+	
+	/**
+	 * Returns current floor of elevator
+	 * @return currFLoor
+	 */
+	public int getcurrFloor() {
+		return currFloor;
 	}
 	
 }

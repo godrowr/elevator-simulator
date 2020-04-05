@@ -6,26 +6,18 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 
 /**
  * 
  * @author Ryan Godrow
- *
+ * This test file runs through functionalities of FloorSubsystem.
  */
 class FloorSubsystemTest {
 	
 	private static FloorSubsystem floorSystem = new FloorSubsystem();
 	//private static Scheduler scheduler = new Scheduler(2);
-	
-	@BeforeAll
-	static void BeforeAll() {
-		//scheduler = new Scheduler(2);
-		//floorSystem = new FloorSubsystem();
-	}
 
 	@Test
 	@DisplayName("Floor System Parse Test")

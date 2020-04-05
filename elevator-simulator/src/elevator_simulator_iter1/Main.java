@@ -3,7 +3,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * The Main class 
+ * The Main class of our project. Running this file creates our elevators and floors and begins the processes. 
  * @author Ryan Godrow
  */
 public class Main {

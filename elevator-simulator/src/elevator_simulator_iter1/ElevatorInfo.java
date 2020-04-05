@@ -1,5 +1,10 @@
 import java.io.*;
 
+/**
+ * This file simply holds the data of an elevator in a human readable format. 
+ * @author RG
+ *
+ */
 public class ElevatorInfo{
 	private int dest;
 	private int elevatorNo;

@@ -1,4 +1,4 @@
-package elevator_simulator_iter1;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,6 +57,12 @@ class ElevatorSubsystemTest {
 		assertEquals(e.getFloor(),1);
 		assertEquals(e.getDest(),2);
 		
+	}
+	
+	@Test
+	@DisplayName("Elevator System Test Goto Floor")
+	void testGotofloor() {
+		assertEquals(elevator.gotoFloor(5), 5);
 	}
 
 }

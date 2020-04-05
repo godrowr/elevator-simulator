@@ -71,7 +71,6 @@ public class UDP{
 	 */
 	public void sendByte(byte[] inputMsg){ //This appears to be the root of the issue. 
 		
-		
 		sendPacket = new DatagramPacket(inputMsg,inputMsg.length,iPAddress,sendPortNum);
 
 		try {

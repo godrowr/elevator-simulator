@@ -1,12 +1,14 @@
-import java.util.*;
+
+
+import java.util.List;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 /**
  * The SchedulerTest class tests the functions of Scheduler such as Decode, QuerySubsystem, and Getnext floor. 
  * @author Ryan Godrow
  */
+
 class SchedulerTest {
 	
 	private static ElevatorButton eButton;
@@ -24,10 +26,10 @@ class SchedulerTest {
 	}
 	
 	/*
-	 * 
+	 * Tests the decode function on the scheduler to insure functionality. 
 	 */
 	@Test
-	@DisplayName("Scheduler <> Test")
+	@DisplayName("Scheduler Decode Test")
 	public void testDecode() {
 		
 		String message = "" + 1 + 2 + 2;
