@@ -3,7 +3,7 @@ SYSC 3303 Elevator control system and simulator team project.
 
 - README.txt explaining the names of your files, set up instructions, etc.
 - Breakdown of Responsibilities of each team member for this iteration
-- UML class diagram and sequence diagrams.
+- FINAL REPORT is located in elevator-simulator/FINAL_REPORT.pdf
 - Detailed set up and test instructions, including test files used
 - Code (.java files, all required Eclipse files, etc.)
 
