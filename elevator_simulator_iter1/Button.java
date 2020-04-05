@@ -3,6 +3,7 @@ import java.time.Instant;
 /**
  * The superclass of button. Every button has a lamp, a destination to go to, 
  * a source to come from, and a boolean of if its been pushed or not. 
+ * 
  */
 class Button {
 	private boolean pushed;
