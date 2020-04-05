@@ -1,5 +1,3 @@
-package elevator_simulator_iter1;
-
 import java.io.*;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;

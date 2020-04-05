@@ -1,6 +1,3 @@
-package elevator_simulator_iter1;
-
-
 import java.util.*;
 
 import java.io.*;
@@ -43,7 +40,7 @@ public class Scheduler implements Runnable{
 		floorRequest = new ArrayList<FloorButton>(); 
 		
 		try {
-			this.uDP = new UDP(570, 750, InetAddress.getLocalHost());
+			this.uDP = new UDP(5700, 7500, InetAddress.getLocalHost());
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,7 +148,7 @@ public class Scheduler implements Runnable{
 		UDP sendUdp = null;
 		try {
 			if(Main.debug == 1)System.out.println("Trying to send packet to elevator");
-			sendUdp = new UDP(571, getFromBuffer.port, InetAddress.getLocalHost());
+			sendUdp = new UDP(5701, getFromBuffer.port, InetAddress.getLocalHost());
 			if(Main.debug == 1)System.out.println("Sent packet to elevator");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

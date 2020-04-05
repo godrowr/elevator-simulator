@@ -1,6 +1,3 @@
-package elevator_simulator_iter1;
-
-
 import java.time.Instant;
 
 /**

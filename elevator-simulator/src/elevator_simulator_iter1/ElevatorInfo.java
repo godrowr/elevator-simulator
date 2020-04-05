@@ -1,5 +1,3 @@
-package elevator_simulator_iter1;
-
 import java.io.*;
 
 public class ElevatorInfo{

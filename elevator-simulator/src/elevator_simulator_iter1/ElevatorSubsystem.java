@@ -1,6 +1,3 @@
-package elevator_simulator_iter1;
-
-
 import java.lang.Thread;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -113,7 +110,7 @@ class Elevator implements Runnable{
 			UDP uDP = null;
 			try {
 				if(Main.debug == 1) System.out.println("Elevator " + elevatorNo + " binding on port " + (elevatorNo+749));
-				uDP = new UDP(elevatorNo+749, 570,InetAddress.getByName("127.0.0.1"));
+				uDP = new UDP(elevatorNo+7499, 5700,InetAddress.getByName("127.0.0.1"));
 				if(Main.debug == 1) System.out.println("Elevator " + elevatorNo + " bound to port " + (elevatorNo+749));
 			}catch(Exception e) {
 				System.out.println("Error binding port " + e);
